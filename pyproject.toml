@@ -1,48 +1,50 @@
-[tool.poetry]
-name = "multiproof"
-version = "v0.1.10"
-description = "A Python library to generate merkle trees and merkle proofs."
-authors = ["StakeWise Labs <info@stakewise.io>"]
+[project]
+name = "murky-tree"
+version = "1.0.0"
+description = "A Python library to generate merkle trees and merkle proofs for Ethereum use."
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/stakewise/multiproof"
-keywords = ["merkle-tree", "multiproof"]
-packages = [
-    { include = "multiproof" },
+requires-python = ">=3.10"
+keywords = ["merkle-tree", "multiproof", "murky-tree"]
+authors = [
+    { name = "Marco Peyfuss", email = "82735893+mpeyfuss@users.noreply.github.com" },
+]
+dependencies = [
+    "eth-abi>=5.2.0",
+    "eth-utils>=6.0.0",
+    "eth-hash[pycryptodome]>=0.8.0",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-eth-abi = "^5.0.1"
-eth-utils = ">=5.1.0"
-eth-hash = {extras = ["pycryptodome"], version = "^0.7.0"}
-
-[tool.poetry.group.dev.dependencies]
-pylint = "^2.14.5"
-mypy = "^0.971"
-pytest = "^7.1.2"
-pre-commit = "^2.20.0"
-Flake8-pyproject = "^1.1.0"
-isort = "==5.12.0"
-
-[tool.bandit]
-exclude_dirs = ["*/tests/*", "src/config/networks.py"]
-
-[tool.pylint."pre-commit-hook"]
-disable=["C0103", "C0114", "C0115", "C0116", "R0801", "R0903", "W0703", "W1514"]
-
-[tool.pylint."BASIC"]
-good-names = ["db", "i", "el", "e", "w", "f", "w3"]
-
-[tool.flake8]
-max-line-length = 88
-select = ["E121"]
-
-[tool.mypy]
-ignore_missing_imports = true
-python_version = "3.10"
-disallow_incomplete_defs = true
+[project.urls]
+repository = "https://github.com/mpeyfuss/murky-tree"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.11.7,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.1",
+    "ty>=0.0.65",
+    "pytest>=9.1.1",
+    "pre-commit>=4.6.1",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# Line length is managed by the formatter; don't fail lint on lines it can't wrap
+# (e.g. long hex-hash literals in tests).
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

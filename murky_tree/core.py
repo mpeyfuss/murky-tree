@@ -1,10 +1,57 @@
-import math
+r"""Flat-array Merkle tree core.
+
+The tree is stored as a single ``list[bytes]`` of ``2 * n - 1`` nodes in
+binary-heap order -- there are no node objects or pointers. This mirrors the
+layout of ``@openzeppelin/merkle-tree`` so that ``dump()`` serializes in a
+byte-for-byte compatible order, and it reduces all navigation to index math.
+
+Layout (example with 4 leaves ``L0..L3``)::
+
+    array index:   0      1      2      3    4    5    6
+                 +------+------+------+----+----+----+----+
+        tree[]:  | root | H34  | H10  | L3 | L2 | L1 | L0 |
+                 +------+------+------+----+----+----+----+
+                    \___ internal nodes __/   \___ leaves __/
+
+    tree shape:                [0] root
+                             /            \
+                       [1] H34            [2] H10
+                       /      \           /      \
+                   [3]        [4]      [5]        [6]
+                    L3         L2       L1         L0
+
+Leaves are written to the *end* of the array in reverse insertion order
+(``tree[len - 1 - i] = leaf_i``); internal nodes are then filled bottom-up, each
+the ``hash_pair`` of its two children, leaving the root at index 0. Reading the
+tree in level order (top-to-bottom, left-to-right) is exactly array order.
+
+Navigation is pure arithmetic on an index ``i`` (see the ``*_index`` helpers)::
+
+    left_child(i)  = 2i + 1
+    right_child(i) = 2i + 2
+    parent(i)      = (i - 1) // 2
+    sibling(i)     = i - 1 if i is even else i + 1
+
+A node is a leaf exactly when its left-child index falls outside the array, so
+no per-node flag is needed. ``get_proof`` walks parent-ward collecting each
+sibling; ``process_proof`` folds those siblings back up with the node hash to
+recompute the root. The default node hash (``hash_pair``) sorts each pair, which
+makes the fold order-independent; ``make_merkle_tree`` / ``process_proof`` /
+``process_multi_proof`` / ``is_valid_merkle_tree`` all accept a ``node_hash``
+override so callers (e.g. ``SimpleMerkleTree``) can supply a custom one.
+"""
+
+from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import pairwise
 from typing import Any
 
-from multiproof.bytes import compare_bytes, concat_bytes, equals_bytes
-from multiproof.utils import keccak
+from murky_tree.utils import keccak
+
+# A node hash combines two child nodes into their parent. The default,
+# ``hash_pair``, sorts the pair so proofs need not encode left/right position;
+# ``SimpleMerkleTree`` may supply a custom one.
+NodeHash = Callable[[bytes, bytes], bytes]
 
 
 @dataclass
@@ -15,10 +62,9 @@ class CoreMultiProof:
 
 
 def hash_pair(a: bytes, b: bytes) -> bytes:
-    if compare_bytes(a, b) < 0:
-        return keccak(concat_bytes(a, b))
-    # pylint: disable=arguments-out-of-order
-    return keccak(concat_bytes(b, a))
+    if a < b:
+        return keccak(a + b)
+    return keccak(b + a)
 
 
 def left_child_index(i: int) -> int:
@@ -31,14 +77,14 @@ def right_child_index(i: int) -> int:
 
 def parent_index(i: int) -> int:
     if i > 0:
-        return math.floor((i - 1) / 2)
-    raise ValueError('Root has no parent')
+        return (i - 1) // 2
+    raise ValueError("Root has no parent")
 
 
 def sibling_index(i: int) -> int:
     if i > 0:
-        return i - (-1) ** (i % 2)
-    raise ValueError('Root has no siblings')
+        return i - 1 if i % 2 == 0 else i + 1
+    raise ValueError("Root has no siblings")
 
 
 def is_tree_node(tree: list[bytes], i: int) -> bool:
@@ -77,20 +123,22 @@ def check_valid_merkle_node(node: bytes) -> None:
         raise ValueError("Merkle tree nodes must be byte array of length 32")
 
 
-def make_merkle_tree(leaves: list[bytes]) -> list[bytes]:
+def make_merkle_tree(
+    leaves: list[bytes], node_hash: NodeHash = hash_pair
+) -> list[bytes]:
     for leaf in leaves:
         check_valid_merkle_node(leaf)
 
     if len(leaves) == 0:
         raise ValueError("Expected non-zero number of leaves")
 
-    tree: list[bytes] = [b''] * (2 * len(leaves) - 1)
+    tree: list[bytes] = [b""] * (2 * len(leaves) - 1)
 
     for index, leaf in enumerate(leaves):
         tree[len(tree) - 1 - index] = leaf
 
     for i in range(len(tree) - 1 - len(leaves), -1, -1):
-        tree[i] = hash_pair(
+        tree[i] = node_hash(
             tree[left_child_index(i)],
             tree[right_child_index(i)],
         )
@@ -108,13 +156,15 @@ def get_proof(tree: list[bytes], index: int) -> list[bytes]:
     return proof
 
 
-def process_proof(leaf: bytes, proof: list[bytes]) -> bytes:
+def process_proof(
+    leaf: bytes, proof: list[bytes], node_hash: NodeHash = hash_pair
+) -> bytes:
     check_valid_merkle_node(leaf)
     for item in proof:
         check_valid_merkle_node(item)
     result = leaf
     for item in proof:
-        result = hash_pair(item, result)
+        result = node_hash(result, item)
     return result
 
 
@@ -156,7 +206,9 @@ def get_multi_proof(tree: list[bytes], indices: list[int]) -> CoreMultiProof:
     )
 
 
-def process_multi_proof(multiproof: CoreMultiProof) -> bytes:
+def process_multi_proof(
+    multiproof: CoreMultiProof, node_hash: NodeHash = hash_pair
+) -> bytes:
     for leaf in multiproof.leaves:
         check_valid_merkle_node(leaf)
 
@@ -166,7 +218,10 @@ def process_multi_proof(multiproof: CoreMultiProof) -> bytes:
     if len(multiproof.proof) < len([x for x in multiproof.proof_flags if not x]):
         raise ValueError("Invalid multiproof format")
 
-    if len(multiproof.leaves) + len(multiproof.proof) != len(multiproof.proof_flags) + 1:
+    if (
+        len(multiproof.leaves) + len(multiproof.proof)
+        != len(multiproof.proof_flags) + 1
+    ):
         raise ValueError("Provided leaves and multiproof are not compatible")
 
     stack = multiproof.leaves.copy()
@@ -179,22 +234,22 @@ def process_multi_proof(multiproof: CoreMultiProof) -> bytes:
         else:
             b = proof.pop(0)
 
-        stack.append(hash_pair(a, b))
+        stack.append(node_hash(a, b))
     return pop_safe(stack) or proof.pop(0)
 
 
-def is_valid_merkle_tree(tree: list[bytes]) -> bool:
+def is_valid_merkle_tree(tree: list[bytes], node_hash: NodeHash = hash_pair) -> bool:
     for i, node in enumerate(tree):
         if not is_valid_merkle_node(node):
             return False
 
-        l = left_child_index(i)
-        r = right_child_index(i)
+        left = left_child_index(i)
+        right = right_child_index(i)
 
-        if r >= len(tree):
-            if l < len(tree):
+        if right >= len(tree):
+            if left < len(tree):
                 return False
-        elif not equals_bytes(node, hash_pair(tree[l], tree[r])):
+        elif node != node_hash(tree[left], tree[right]):
             return False
 
     return len(tree) > 0

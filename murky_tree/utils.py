@@ -1,5 +1,3 @@
-from typing import Optional
-
 from eth_typing import HexStr, Primitives
 from eth_utils import keccak as eth_utils_keccak
 from eth_utils import to_bytes
@@ -11,11 +9,11 @@ def check_bounds(array: list, index: int) -> None:
 
 
 def keccak(
-    primitive: Optional[Primitives] = None,
-    text: Optional[str] = None,
-    hexstr: Optional[HexStr] = None,
+    primitive: Primitives | None = None,
+    text: str | None = None,
+    hexstr: HexStr | None = None,
 ) -> bytes:
-    """ Taken from web3py """
+    """Taken from web3py"""
     if isinstance(primitive, (bytes, int, type(None))):
         input_bytes = to_bytes(primitive, hexstr=hexstr, text=text)
         return eth_utils_keccak(input_bytes)
