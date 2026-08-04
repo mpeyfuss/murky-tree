@@ -8,7 +8,11 @@ from eth_utils import to_bytes, to_hex
 
 from murky_tree.core import hash_pair
 from murky_tree.merkletree import BaseMerkleTree, LeafValue, MultiProof, T, build_tree
-from murky_tree.utils import keccak
+from murky_tree.utils import (
+    decode_values_from_json,
+    encode_values_for_json,
+    keccak,
+)
 
 
 @dataclass
@@ -79,12 +83,33 @@ class StandardMerkleTree(BaseMerkleTree[T]):
             leaf_encoding=self.leaf_encoding,
         )
 
+    def to_json(self) -> dict:
+        return {
+            "format": "standard-v1",
+            "tree": [to_hex(v) for v in self.tree],
+            "values": [
+                {
+                    "value": encode_values_for_json(v.value, self.leaf_encoding),
+                    "treeIndex": v.tree_index,
+                }
+                for v in self.values
+            ],
+            "leafEncoding": self.leaf_encoding,
+        }
+
     @staticmethod
     def from_json(data: dict) -> "StandardMerkleTree[T]":
+        leaf_encoding = data["leafEncoding"]
         tree_data = StandardMerkleTreeData(
             tree=data["tree"],
-            values=[LeafValue(**item) for item in data["values"]],
-            leaf_encoding=data["leaf_encoding"],
+            values=[
+                LeafValue(
+                    value=decode_values_from_json(item["value"], leaf_encoding),
+                    tree_index=item["treeIndex"],
+                )
+                for item in data["values"]
+            ],
+            leaf_encoding=leaf_encoding,
             format=data.get("format", "standard-v1"),
         )
         return StandardMerkleTree.load(tree_data)

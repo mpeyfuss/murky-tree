@@ -124,11 +124,28 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
             hash="custom" if self._custom_node_hash else None,
         )
 
+    def to_json(self) -> dict:
+        data: dict = {
+            "format": "simple-v1",
+            "tree": [to_hex(v) for v in self.tree],
+            "values": [
+                {"value": to_hex(v.value), "treeIndex": v.tree_index}
+                for v in self.values
+            ],
+        }
+        # Match OZ: the ``hash`` key is present only for a custom node hash.
+        if self._custom_node_hash:
+            data["hash"] = "custom"
+        return data
+
     @staticmethod
     def from_json(data: dict, node_hash: NodeHash | None = None) -> "SimpleMerkleTree":
         tree_data = SimpleMerkleTreeData(
             tree=data["tree"],
-            values=[LeafValue(**item) for item in data["values"]],
+            values=[
+                LeafValue(value=item["value"], tree_index=item["treeIndex"])
+                for item in data["values"]
+            ],
             format=data.get("format", "simple-v1"),
             hash=data.get("hash"),
         )

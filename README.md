@@ -204,6 +204,63 @@ recompute the root. This flat representation is both faster than a pointer-based
 tree (contiguous memory, no per-node allocation) and what makes `dump`/`load`
 interoperable with the JavaScript library for frontend applications.
 
+### Serialization and JSON interoperability
+
+There are two ways to serialize a tree, forming two independent round-trip pairs.
+Choose based on where the data is going.
+
+|                              | `dump()` ↔ `load()`                                    | `to_json()` ↔ `from_json()`                       |
+| ---------------------------- | ------------------------------------------------------ | ------------------------------------------------- |
+| Returns                      | a typed dataclass (`StandardMerkleTreeData` / `SimpleMerkleTreeData`) | a plain, JSON-ready `dict`          |
+| Keys                         | snake_case (`tree_index`, `leaf_encoding`)             | camelCase (`treeIndex`, `leafEncoding`)           |
+| Integer leaf values          | native Python `int`                                    | decimal strings (JavaScript-safe)                 |
+| Simple tree's default `hash` | present, as `None`                                     | omitted                                            |
+| Interop with `@openzeppelin/merkle-tree` | no                                         | **yes** — byte-for-byte                            |
+| Use it for                   | keeping a typed, structured copy inside Python         | writing files / handing a tree to a frontend      |
+
+**Use `to_json()` whenever the tree leaves your process** — persisting to disk,
+sending it over the wire, or distributing a `tree.json` that a JavaScript
+frontend will load. It emits the exact format the JS library produces, so it
+loads there with `StandardMerkleTree.load(...)` / `SimpleMerkleTree.load(...)`,
+and back here with `from_json`:
+
+```python
+import json
+
+with open("tree.json", "w") as f:
+    json.dump(tree.to_json(), f)                       # write (loadable by the JS library)
+
+with open("tree.json") as f:
+    tree = StandardMerkleTree.from_json(json.load(f))  # read back
+```
+
+**Use `dump()` when you stay inside Python** — to inspect the structured fields,
+cache the description in memory, or hand it straight to `load()`. It returns a
+typed dataclass, not JSON. Do **not** `json.dump` it for a frontend: its
+snake_case keys and numeric big integers are not what the JS library expects, and
+large integers written as JSON numbers would lose precision on the JS side.
+
+```python
+data = tree.dump()                     # StandardMerkleTreeData(...)
+same = StandardMerkleTree.load(data)   # reconstruct from the dataclass
+```
+
+To achieve interoperability, `to_json`/`from_json` follow the JS library's
+conventions rather than the Python dataclass API:
+
+- Keys are **camelCase** (`treeIndex`, `leafEncoding`), not snake_case.
+- The simple tree's `hash` key is present only for a custom node hash (omitted
+  otherwise).
+- Integer leaf values (`uint*`/`int*`) are serialized as **decimal strings**, so
+  large `uint256` values survive JavaScript's `Number` precision limit;
+  `from_json` parses them back to Python `int`s. This applies at any nesting
+  depth — integers inside arrays and tuples/structs (e.g. `(address,uint256)`,
+  `uint256[]`) are handled too, by walking the ABI type grammar.
+
+The `reference/` folder contains a bun + TypeScript script that generates
+cross-implementation test vectors with the real JS library; `tests/test_reference_vectors.py`
+checks that `murky-tree` reproduces them and that this JSON format matches.
+
 ## Advanced usage
 
 ### Leaf Hash
@@ -245,11 +302,30 @@ from murky_tree import StandardMerkleTree
 
 ```python3
 tree = StandardMerkleTree.of(
-    [["alice", "100"], ["bob", "200"]], ["address", "uint"], sort_leaves=True
+    [
+        ["0x1111111111111111111111111111111111111111", 5000000000000000000],
+        ["0x2222222222222222222222222222222222222222", 2500000000000000000],
+    ],
+    ["address", "uint256"],
+    sort_leaves=True,
 )
 ```
 
-Creates a standard Merkle tree out of an array of the elements in the tree, along with their types for ABI encoding. For documentation on the syntax of the types, including how to encode structs, refer to the documentation for Ethers.js's [`AbiCoder`](https://docs.ethers.org/v5/api/utils/abi/coder/#AbiCoder-encode).
+Creates a standard Merkle tree from an array of value tuples together with the ABI types used to encode each leaf.
+
+The leaves are encoded with [`eth-abi`](https://eth-abi.readthedocs.io/) (via `eth_abi.encode`), so **both the type strings and the values must be in the form `eth-abi` expects** — Solidity ABI type names and their Python representations:
+
+| ABI type              | Example type string          | Python value                          |
+| --------------------- | ---------------------------- | ------------------------------------- |
+| Unsigned/signed int   | `"uint256"`, `"int128"`      | `int` (e.g. `100`) — **not** a string |
+| Address               | `"address"`                  | hex `str` (`"0x…"`)                    |
+| Boolean               | `"bool"`                     | `bool`                                |
+| String                | `"string"`                   | `str`                                 |
+| Fixed/dynamic bytes   | `"bytes32"`, `"bytes"`       | `bytes` or hex `str`                  |
+| Array                 | `"uint256[]"`, `"address[2]"`| `list`                                |
+| Tuple / struct        | `"(address,uint256)"`        | `tuple`/`list` of its fields          |
+
+Types nest arbitrarily, e.g. `"(address,uint256)[]"` or `"(uint8,(address,uint256[]))"` (a Solidity `enum` is encoded as its underlying `uint8`). Integers in particular must be passed as Python `int`s — `eth-abi` rejects decimal strings. When you serialize with `to_json` those integers are converted to strings for JavaScript, and `from_json` converts them back (see [Serialization](#serialization-and-json-interoperability)).
 
 #### `StandardMerkleTree.load`
 
@@ -260,7 +336,7 @@ StandardMerkleTree.load(
     StandardMerkleTreeData(
         format="standard-v1",
         tree=["0x0000000000000000000000000000000000000000000000000000000000000000"],
-        values=[LeafValue(value=["0"], tree_index=0)],
+        values=[LeafValue(value=[0], tree_index=0)],
         leaf_encoding=["uint256"],
     )
 )
@@ -303,10 +379,21 @@ The root of the tree is a commitment on the values of the tree. It can be publis
 #### `tree.dump`
 
 ```python3
-tree.dump()
+data = tree.dump()   # StandardMerkleTreeData / SimpleMerkleTreeData
 ```
 
-Returns a description of the Merkle tree for distribution. It contains all the necessary information to reproduce the tree, find the relevant leaves, and generate proofs. You should distribute this to users in a web application or command line interface so they can generate proofs for their leaves of interest.
+Returns a typed dataclass describing the tree — the in-memory, snake_case counterpart to `load()`. Use it to keep a structured copy inside Python or to reconstruct the tree with `StandardMerkleTree.load(data)`. It is **not** JSON; to write a file or interoperate with the JavaScript library, use [`to_json`](#treeto_json) instead. See [Serialization](#serialization-and-json-interoperability) for the full comparison.
+
+#### `tree.to_json`
+
+```python3
+import json
+
+with open("tree.json", "w") as file:
+    json.dump(tree.to_json(), file)
+```
+
+Returns a plain `dict` in the exact `@openzeppelin/merkle-tree` JSON format (camelCase keys, integer leaf values as decimal strings). This is the description you distribute to users or a frontend so they can generate proofs for their leaves of interest; read it back with `from_json`. It contains all the information needed to reproduce the tree, find the relevant leaves, and generate proofs.
 
 #### `tree.get_proof`
 

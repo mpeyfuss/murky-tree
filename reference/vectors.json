@@ -1,0 +1,2044 @@
+{
+  "generator": "@openzeppelin/merkle-tree",
+  "version": "1.0.8",
+  "cases": [
+    {
+      "name": "standard-string-sorted",
+      "type": "standard",
+      "input": {
+        "leafEncoding": [
+          "string"
+        ],
+        "sortLeaves": true,
+        "nodeHash": "default",
+        "values": [
+          [
+            "a"
+          ],
+          [
+            "b"
+          ],
+          [
+            "c"
+          ],
+          [
+            "d"
+          ],
+          [
+            "e"
+          ],
+          [
+            "f"
+          ]
+        ]
+      },
+      "root": "0x6deb52b5da8fd108f79fab00341f38d2587896634c646ee52e49f845680a70c8",
+      "tree": [
+        "0x6deb52b5da8fd108f79fab00341f38d2587896634c646ee52e49f845680a70c8",
+        "0x52426e0f1f65ff7e209a13b8c29cffe82e3acaf3dad0a9b9088f3b9a61a929c3",
+        "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51",
+        "0x8076923e76cf01a7c048400a2304c9a9c23bbbdac3a98ea3946340fdafbba34f",
+        "0x965b92c6cf08303cc4feb7f3e0819c436c2cec17c6f0688a6af139c9a368707c",
+        "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+        "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+        "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+        "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+        "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+        "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681"
+      ],
+      "leafHashes": [
+        "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+        "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+        "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+        "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+        "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+        "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848"
+      ],
+      "proofs": [
+        [
+          "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+          "0x965b92c6cf08303cc4feb7f3e0819c436c2cec17c6f0688a6af139c9a368707c",
+          "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51"
+        ],
+        [
+          "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+          "0x8076923e76cf01a7c048400a2304c9a9c23bbbdac3a98ea3946340fdafbba34f",
+          "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51"
+        ],
+        [
+          "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+          "0x965b92c6cf08303cc4feb7f3e0819c436c2cec17c6f0688a6af139c9a368707c",
+          "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51"
+        ],
+        [
+          "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+          "0x52426e0f1f65ff7e209a13b8c29cffe82e3acaf3dad0a9b9088f3b9a61a929c3"
+        ],
+        [
+          "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+          "0x8076923e76cf01a7c048400a2304c9a9c23bbbdac3a98ea3946340fdafbba34f",
+          "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51"
+        ],
+        [
+          "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+          "0x52426e0f1f65ff7e209a13b8c29cffe82e3acaf3dad0a9b9088f3b9a61a929c3"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x6deb52b5da8fd108f79fab00341f38d2587896634c646ee52e49f845680a70c8"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            [
+              "b"
+            ],
+            [
+              "a"
+            ]
+          ],
+          "proof": [
+            "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+            "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+            "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            5
+          ],
+          "leaves": [
+            [
+              "b"
+            ],
+            [
+              "a"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [
+            "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+            "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+            "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "b"
+            ],
+            [
+              "e"
+            ],
+            [
+              "f"
+            ],
+            [
+              "d"
+            ]
+          ],
+          "proof": [
+            "0x8076923e76cf01a7c048400a2304c9a9c23bbbdac3a98ea3946340fdafbba34f"
+          ],
+          "proofFlags": [
+            true,
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "e"
+            ],
+            [
+              "a"
+            ],
+            [
+              "c"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [
+            "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+            "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b"
+          ],
+          "proofFlags": [
+            false,
+            true,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "b"
+            ],
+            [
+              "e"
+            ],
+            [
+              "a"
+            ],
+            [
+              "c"
+            ],
+            [
+              "f"
+            ],
+            [
+              "d"
+            ]
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "standard-v1",
+        "leafEncoding": [
+          "string"
+        ],
+        "tree": [
+          "0x6deb52b5da8fd108f79fab00341f38d2587896634c646ee52e49f845680a70c8",
+          "0x52426e0f1f65ff7e209a13b8c29cffe82e3acaf3dad0a9b9088f3b9a61a929c3",
+          "0xfd3cf45654e88d1cc5d663578c82c76f4b5e3826bacaa1216441443504538f51",
+          "0x8076923e76cf01a7c048400a2304c9a9c23bbbdac3a98ea3946340fdafbba34f",
+          "0x965b92c6cf08303cc4feb7f3e0819c436c2cec17c6f0688a6af139c9a368707c",
+          "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+          "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+          "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+          "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+          "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+          "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681"
+        ],
+        "values": [
+          {
+            "value": [
+              "a"
+            ],
+            "treeIndex": 8
+          },
+          {
+            "value": [
+              "b"
+            ],
+            "treeIndex": 10
+          },
+          {
+            "value": [
+              "c"
+            ],
+            "treeIndex": 7
+          },
+          {
+            "value": [
+              "d"
+            ],
+            "treeIndex": 5
+          },
+          {
+            "value": [
+              "e"
+            ],
+            "treeIndex": 9
+          },
+          {
+            "value": [
+              "f"
+            ],
+            "treeIndex": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "standard-string-unsorted",
+      "type": "standard",
+      "input": {
+        "leafEncoding": [
+          "string"
+        ],
+        "sortLeaves": false,
+        "nodeHash": "default",
+        "values": [
+          [
+            "a"
+          ],
+          [
+            "b"
+          ],
+          [
+            "c"
+          ],
+          [
+            "d"
+          ],
+          [
+            "e"
+          ],
+          [
+            "f"
+          ]
+        ]
+      },
+      "root": "0x23be0977360f08bb0bd7f709a7d543d2cd779c79c66d74e0441919871647de2b",
+      "tree": [
+        "0x23be0977360f08bb0bd7f709a7d543d2cd779c79c66d74e0441919871647de2b",
+        "0x8f7234e8cfe39c08ca84a3a3e3274f574af26fd15165fe29e09cbab742daccd9",
+        "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece",
+        "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9",
+        "0xfa914d99a18dc32d9725b3ef1c50426deb40ec8d0885dac8edcc5bfd6d030016",
+        "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+        "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+        "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+        "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+        "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+        "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c"
+      ],
+      "leafHashes": [
+        "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+        "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+        "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+        "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+        "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+        "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848"
+      ],
+      "proofs": [
+        [
+          "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+          "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9",
+          "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece"
+        ],
+        [
+          "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+          "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9",
+          "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece"
+        ],
+        [
+          "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+          "0xfa914d99a18dc32d9725b3ef1c50426deb40ec8d0885dac8edcc5bfd6d030016",
+          "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece"
+        ],
+        [
+          "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+          "0xfa914d99a18dc32d9725b3ef1c50426deb40ec8d0885dac8edcc5bfd6d030016",
+          "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece"
+        ],
+        [
+          "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+          "0x8f7234e8cfe39c08ca84a3a3e3274f574af26fd15165fe29e09cbab742daccd9"
+        ],
+        [
+          "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+          "0x8f7234e8cfe39c08ca84a3a3e3274f574af26fd15165fe29e09cbab742daccd9"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x23be0977360f08bb0bd7f709a7d543d2cd779c79c66d74e0441919871647de2b"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            [
+              "a"
+            ],
+            [
+              "b"
+            ]
+          ],
+          "proof": [
+            "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9",
+            "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            5
+          ],
+          "leaves": [
+            [
+              "a"
+            ],
+            [
+              "b"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [
+            "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+            "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "b"
+            ],
+            [
+              "d"
+            ],
+            [
+              "e"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [
+            "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c",
+            "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "a"
+            ],
+            [
+              "c"
+            ],
+            [
+              "e"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [
+            "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+            "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            [
+              "a"
+            ],
+            [
+              "b"
+            ],
+            [
+              "c"
+            ],
+            [
+              "d"
+            ],
+            [
+              "e"
+            ],
+            [
+              "f"
+            ]
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "standard-v1",
+        "leafEncoding": [
+          "string"
+        ],
+        "tree": [
+          "0x23be0977360f08bb0bd7f709a7d543d2cd779c79c66d74e0441919871647de2b",
+          "0x8f7234e8cfe39c08ca84a3a3e3274f574af26fd15165fe29e09cbab742daccd9",
+          "0x7b0c6cd04b82bfc0e250030a5d2690c52585e0cc6a4f3bc7909d7723b0236ece",
+          "0x03707d7802a71ca56a8ad8028da98c4f1dbec55b31b4a25d536b5309cc20eda9",
+          "0xfa914d99a18dc32d9725b3ef1c50426deb40ec8d0885dac8edcc5bfd6d030016",
+          "0xc62a8cfa41edc0ef6f6ae27a2985b7d39c7fea770787d7e104696c6e81f64848",
+          "0x9a4f64e953595df82d1b4f570d34c4f4f0cfaf729a61e9d60e83e579e1aa283e",
+          "0xeba909cf4bb90c6922771d7f126ad0fd11dfde93f3937a196274e1ac20fd2f5b",
+          "0x9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b",
+          "0x19ba6c6333e0e9a15bf67523e0676e2f23eb8e574092552d5e888c64a4bb3681",
+          "0x9c15a6a0eaeed500fd9eed4cbeab71f797cefcc67bfd46683e4d2e6ff7f06d1c"
+        ],
+        "values": [
+          {
+            "value": [
+              "a"
+            ],
+            "treeIndex": 10
+          },
+          {
+            "value": [
+              "b"
+            ],
+            "treeIndex": 9
+          },
+          {
+            "value": [
+              "c"
+            ],
+            "treeIndex": 8
+          },
+          {
+            "value": [
+              "d"
+            ],
+            "treeIndex": 7
+          },
+          {
+            "value": [
+              "e"
+            ],
+            "treeIndex": 6
+          },
+          {
+            "value": [
+              "f"
+            ],
+            "treeIndex": 5
+          }
+        ]
+      }
+    },
+    {
+      "name": "standard-airdrop-sorted",
+      "type": "standard",
+      "input": {
+        "leafEncoding": [
+          "address",
+          "uint256"
+        ],
+        "sortLeaves": true,
+        "nodeHash": "default",
+        "values": [
+          [
+            "0x1111111111111111111111111111111111111111",
+            "5000000000000000000"
+          ],
+          [
+            "0x2222222222222222222222222222222222222222",
+            "2500000000000000000"
+          ],
+          [
+            "0x3333333333333333333333333333333333333333",
+            "1000000000000000000"
+          ],
+          [
+            "0x4444444444444444444444444444444444444444",
+            "0"
+          ]
+        ]
+      },
+      "root": "0x0c70b45cb5c26b32a86dd2b166074c4311feb45a24ff95ee4a1bafda1e0dd671",
+      "tree": [
+        "0x0c70b45cb5c26b32a86dd2b166074c4311feb45a24ff95ee4a1bafda1e0dd671",
+        "0xcc68be0fb07973d30b0b70c7c3758f8a4cf464921f9ed8b1be9c22170e2d78b7",
+        "0x252048a6d592a888dcba1e78fc6856b3fe062260c218d5aa16f7010913f0657c",
+        "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+        "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+        "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+        "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695"
+      ],
+      "leafHashes": [
+        "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+        "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+        "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+        "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695"
+      ],
+      "proofs": [
+        [
+          "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+          "0x252048a6d592a888dcba1e78fc6856b3fe062260c218d5aa16f7010913f0657c"
+        ],
+        [
+          "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695",
+          "0xcc68be0fb07973d30b0b70c7c3758f8a4cf464921f9ed8b1be9c22170e2d78b7"
+        ],
+        [
+          "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+          "0x252048a6d592a888dcba1e78fc6856b3fe062260c218d5aa16f7010913f0657c"
+        ],
+        [
+          "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+          "0xcc68be0fb07973d30b0b70c7c3758f8a4cf464921f9ed8b1be9c22170e2d78b7"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x0c70b45cb5c26b32a86dd2b166074c4311feb45a24ff95ee4a1bafda1e0dd671"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ]
+          ],
+          "proof": [
+            "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695",
+            "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3
+          ],
+          "leaves": [
+            [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ],
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ]
+          ],
+          "proof": [
+            "0xcc68be0fb07973d30b0b70c7c3758f8a4cf464921f9ed8b1be9c22170e2d78b7"
+          ],
+          "proofFlags": [
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2
+          ],
+          "leaves": [
+            [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ],
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ]
+          ],
+          "proof": [
+            "0x252048a6d592a888dcba1e78fc6856b3fe062260c218d5aa16f7010913f0657c"
+          ],
+          "proofFlags": [
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "leaves": [
+            [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ],
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ],
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ]
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "standard-v1",
+        "leafEncoding": [
+          "address",
+          "uint256"
+        ],
+        "tree": [
+          "0x0c70b45cb5c26b32a86dd2b166074c4311feb45a24ff95ee4a1bafda1e0dd671",
+          "0xcc68be0fb07973d30b0b70c7c3758f8a4cf464921f9ed8b1be9c22170e2d78b7",
+          "0x252048a6d592a888dcba1e78fc6856b3fe062260c218d5aa16f7010913f0657c",
+          "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+          "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+          "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+          "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695"
+        ],
+        "values": [
+          {
+            "value": [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            "treeIndex": 3
+          },
+          {
+            "value": [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            "treeIndex": 5
+          },
+          {
+            "value": [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ],
+            "treeIndex": 4
+          },
+          {
+            "value": [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ],
+            "treeIndex": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "standard-airdrop-unsorted",
+      "type": "standard",
+      "input": {
+        "leafEncoding": [
+          "address",
+          "uint256"
+        ],
+        "sortLeaves": false,
+        "nodeHash": "default",
+        "values": [
+          [
+            "0x1111111111111111111111111111111111111111",
+            "5000000000000000000"
+          ],
+          [
+            "0x2222222222222222222222222222222222222222",
+            "2500000000000000000"
+          ],
+          [
+            "0x3333333333333333333333333333333333333333",
+            "1000000000000000000"
+          ],
+          [
+            "0x4444444444444444444444444444444444444444",
+            "0"
+          ]
+        ]
+      },
+      "root": "0xac8e137dcc5ac1baecdd0e6b10e7ea1762b7a7ce90aeda5b91167d7984c445f7",
+      "tree": [
+        "0xac8e137dcc5ac1baecdd0e6b10e7ea1762b7a7ce90aeda5b91167d7984c445f7",
+        "0x6995974df68f4d2aed64d77bba862d040e4d6ab99dfcd3a45f351468fa3d4a97",
+        "0xd4dee0beab2d53f2cc83e567171bd2820e49898130a22622b10ead383e90bd77",
+        "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695",
+        "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+        "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+        "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283"
+      ],
+      "leafHashes": [
+        "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+        "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+        "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+        "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695"
+      ],
+      "proofs": [
+        [
+          "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+          "0x6995974df68f4d2aed64d77bba862d040e4d6ab99dfcd3a45f351468fa3d4a97"
+        ],
+        [
+          "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+          "0x6995974df68f4d2aed64d77bba862d040e4d6ab99dfcd3a45f351468fa3d4a97"
+        ],
+        [
+          "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695",
+          "0xd4dee0beab2d53f2cc83e567171bd2820e49898130a22622b10ead383e90bd77"
+        ],
+        [
+          "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+          "0xd4dee0beab2d53f2cc83e567171bd2820e49898130a22622b10ead383e90bd77"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0xac8e137dcc5ac1baecdd0e6b10e7ea1762b7a7ce90aeda5b91167d7984c445f7"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ]
+          ],
+          "proof": [
+            "0x6995974df68f4d2aed64d77bba862d040e4d6ab99dfcd3a45f351468fa3d4a97"
+          ],
+          "proofFlags": [
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3
+          ],
+          "leaves": [
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ]
+          ],
+          "proof": [
+            "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283",
+            "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2
+          ],
+          "leaves": [
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ]
+          ],
+          "proof": [
+            "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+            "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "leaves": [
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ],
+            [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ]
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "standard-v1",
+        "leafEncoding": [
+          "address",
+          "uint256"
+        ],
+        "tree": [
+          "0xac8e137dcc5ac1baecdd0e6b10e7ea1762b7a7ce90aeda5b91167d7984c445f7",
+          "0x6995974df68f4d2aed64d77bba862d040e4d6ab99dfcd3a45f351468fa3d4a97",
+          "0xd4dee0beab2d53f2cc83e567171bd2820e49898130a22622b10ead383e90bd77",
+          "0x6b66955d20be1d7a26a7700e4e38f64c33d50c2bbf2fd066d72bc6e36554a695",
+          "0xe4fc5b35ba4bd627dffb795fa4c398e7896386584837a8a23f7f3c9ab869b7cc",
+          "0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc",
+          "0xeb02c421cfa48976e66dfb29120745909ea3a0f843456c263cf8f1253483e283"
+        ],
+        "values": [
+          {
+            "value": [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            "treeIndex": 6
+          },
+          {
+            "value": [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            "treeIndex": 5
+          },
+          {
+            "value": [
+              "0x3333333333333333333333333333333333333333",
+              "1000000000000000000"
+            ],
+            "treeIndex": 4
+          },
+          {
+            "value": [
+              "0x4444444444444444444444444444444444444444",
+              "0"
+            ],
+            "treeIndex": 3
+          }
+        ]
+      }
+    },
+    {
+      "name": "standard-nested-sorted",
+      "type": "standard",
+      "input": {
+        "leafEncoding": [
+          "(address,uint256)",
+          "uint256[]"
+        ],
+        "sortLeaves": true,
+        "nodeHash": "default",
+        "values": [
+          [
+            [
+              "0x1111111111111111111111111111111111111111",
+              "5000000000000000000"
+            ],
+            [
+              "1",
+              "2",
+              "3"
+            ]
+          ],
+          [
+            [
+              "0x2222222222222222222222222222222222222222",
+              "2500000000000000000"
+            ],
+            [
+              "10000000000000000000"
+            ]
+          ],
+          [
+            [
+              "0x3333333333333333333333333333333333333333",
+              "0"
+            ],
+            []
+          ]
+        ]
+      },
+      "root": "0x3ba70b4a0afe716d38b8f80d638c02ce3f3f9080513ad5e4f2fafd5c0d0baf94",
+      "tree": [
+        "0x3ba70b4a0afe716d38b8f80d638c02ce3f3f9080513ad5e4f2fafd5c0d0baf94",
+        "0xbaadd52b9d060c5fe7d79bcd53536e99e878542d5c89f6cf2e31b11306345f12",
+        "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d",
+        "0x5789b834f240a7d3b99679f3093f0b71f030d5b97b61f2bf96a83d64013a3a4b",
+        "0x1a6d8a3884e211c4e0cd15120304bcc59e77b6b88d73d978a9fc81626b0786c9"
+      ],
+      "leafHashes": [
+        "0x1a6d8a3884e211c4e0cd15120304bcc59e77b6b88d73d978a9fc81626b0786c9",
+        "0x5789b834f240a7d3b99679f3093f0b71f030d5b97b61f2bf96a83d64013a3a4b",
+        "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d"
+      ],
+      "proofs": [
+        [
+          "0x5789b834f240a7d3b99679f3093f0b71f030d5b97b61f2bf96a83d64013a3a4b",
+          "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d"
+        ],
+        [
+          "0x1a6d8a3884e211c4e0cd15120304bcc59e77b6b88d73d978a9fc81626b0786c9",
+          "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d"
+        ],
+        [
+          "0xbaadd52b9d060c5fe7d79bcd53536e99e878542d5c89f6cf2e31b11306345f12"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x3ba70b4a0afe716d38b8f80d638c02ce3f3f9080513ad5e4f2fafd5c0d0baf94"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            [
+              [
+                "0x1111111111111111111111111111111111111111",
+                "5000000000000000000"
+              ],
+              [
+                "1",
+                "2",
+                "3"
+              ]
+            ],
+            [
+              [
+                "0x2222222222222222222222222222222222222222",
+                "2500000000000000000"
+              ],
+              [
+                "10000000000000000000"
+              ]
+            ]
+          ],
+          "proof": [
+            "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d"
+          ],
+          "proofFlags": [
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            1
+          ],
+          "leaves": [
+            [
+              [
+                "0x2222222222222222222222222222222222222222",
+                "2500000000000000000"
+              ],
+              [
+                "10000000000000000000"
+              ]
+            ]
+          ],
+          "proof": [
+            "0x1a6d8a3884e211c4e0cd15120304bcc59e77b6b88d73d978a9fc81626b0786c9",
+            "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d"
+          ],
+          "proofFlags": [
+            false,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2
+          ],
+          "leaves": [
+            [
+              [
+                "0x1111111111111111111111111111111111111111",
+                "5000000000000000000"
+              ],
+              [
+                "1",
+                "2",
+                "3"
+              ]
+            ],
+            [
+              [
+                "0x3333333333333333333333333333333333333333",
+                "0"
+              ],
+              []
+            ]
+          ],
+          "proof": [
+            "0x5789b834f240a7d3b99679f3093f0b71f030d5b97b61f2bf96a83d64013a3a4b"
+          ],
+          "proofFlags": [
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "leaves": [
+            [
+              [
+                "0x1111111111111111111111111111111111111111",
+                "5000000000000000000"
+              ],
+              [
+                "1",
+                "2",
+                "3"
+              ]
+            ],
+            [
+              [
+                "0x2222222222222222222222222222222222222222",
+                "2500000000000000000"
+              ],
+              [
+                "10000000000000000000"
+              ]
+            ],
+            [
+              [
+                "0x3333333333333333333333333333333333333333",
+                "0"
+              ],
+              []
+            ]
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "standard-v1",
+        "leafEncoding": [
+          "(address,uint256)",
+          "uint256[]"
+        ],
+        "tree": [
+          "0x3ba70b4a0afe716d38b8f80d638c02ce3f3f9080513ad5e4f2fafd5c0d0baf94",
+          "0xbaadd52b9d060c5fe7d79bcd53536e99e878542d5c89f6cf2e31b11306345f12",
+          "0xcf309c0a62ff498425bcb86584582d43d1d689321d31bc538a833263c8279e3d",
+          "0x5789b834f240a7d3b99679f3093f0b71f030d5b97b61f2bf96a83d64013a3a4b",
+          "0x1a6d8a3884e211c4e0cd15120304bcc59e77b6b88d73d978a9fc81626b0786c9"
+        ],
+        "values": [
+          {
+            "value": [
+              [
+                "0x1111111111111111111111111111111111111111",
+                "5000000000000000000"
+              ],
+              [
+                "1",
+                "2",
+                "3"
+              ]
+            ],
+            "treeIndex": 4
+          },
+          {
+            "value": [
+              [
+                "0x2222222222222222222222222222222222222222",
+                "2500000000000000000"
+              ],
+              [
+                "10000000000000000000"
+              ]
+            ],
+            "treeIndex": 3
+          },
+          {
+            "value": [
+              [
+                "0x3333333333333333333333333333333333333333",
+                "0"
+              ],
+              []
+            ],
+            "treeIndex": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "simple-sorted",
+      "type": "simple",
+      "input": {
+        "sortLeaves": true,
+        "nodeHash": "default",
+        "values": [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+        ]
+      },
+      "root": "0x1b404f199ea828ec5771fb30139c222d8417a82175fefad5cd42bc3a189bd8d5",
+      "tree": [
+        "0x1b404f199ea828ec5771fb30139c222d8417a82175fefad5cd42bc3a189bd8d5",
+        "0xec554bdfb01d31fa838d0830339b0e6e8a70e0d55a8f172ffa8bebbf8e8d5ba0",
+        "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb",
+        "0x434d51cfeb80272378f4c3a8fd2824561c2cad9fce556ea600d46f20550976a6",
+        "0x7dea550f679f3caab547cbbc5ee1a4c978c8c039b572ba00af1baa6481b88360",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2"
+      ],
+      "leafHashes": [
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+      ],
+      "proofs": [
+        [
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0x434d51cfeb80272378f4c3a8fd2824561c2cad9fce556ea600d46f20550976a6",
+          "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb"
+        ],
+        [
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0x7dea550f679f3caab547cbbc5ee1a4c978c8c039b572ba00af1baa6481b88360",
+          "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb"
+        ],
+        [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0x434d51cfeb80272378f4c3a8fd2824561c2cad9fce556ea600d46f20550976a6",
+          "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb"
+        ],
+        [
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0xec554bdfb01d31fa838d0830339b0e6e8a70e0d55a8f172ffa8bebbf8e8d5ba0"
+        ],
+        [
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0x7dea550f679f3caab547cbbc5ee1a4c978c8c039b572ba00af1baa6481b88360",
+          "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb"
+        ],
+        [
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xec554bdfb01d31fa838d0830339b0e6e8a70e0d55a8f172ffa8bebbf8e8d5ba0"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x1b404f199ea828ec5771fb30139c222d8417a82175fefad5cd42bc3a189bd8d5"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510"
+          ],
+          "proof": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            5
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proof": [
+            "0x7dea550f679f3caab547cbbc5ee1a4c978c8c039b572ba00af1baa6481b88360"
+          ],
+          "proofFlags": [
+            true,
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "simple-v1",
+        "tree": [
+          "0x1b404f199ea828ec5771fb30139c222d8417a82175fefad5cd42bc3a189bd8d5",
+          "0xec554bdfb01d31fa838d0830339b0e6e8a70e0d55a8f172ffa8bebbf8e8d5ba0",
+          "0xaf46af0745b433e1d5bed9a04b1fdf4002f67a733c20db2fca5b2af6120d9bcb",
+          "0x434d51cfeb80272378f4c3a8fd2824561c2cad9fce556ea600d46f20550976a6",
+          "0x7dea550f679f3caab547cbbc5ee1a4c978c8c039b572ba00af1baa6481b88360",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2"
+        ],
+        "values": [
+          {
+            "value": "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "treeIndex": 9
+          },
+          {
+            "value": "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "treeIndex": 7
+          },
+          {
+            "value": "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "treeIndex": 10
+          },
+          {
+            "value": "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+            "treeIndex": 5
+          },
+          {
+            "value": "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "treeIndex": 8
+          },
+          {
+            "value": "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "treeIndex": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "simple-unsorted",
+      "type": "simple",
+      "input": {
+        "sortLeaves": false,
+        "nodeHash": "default",
+        "values": [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+        ]
+      },
+      "root": "0x9012f1e18a87790d2e01faace75aaaca38e53df437cdce2c0552464dda4af49c",
+      "tree": [
+        "0x9012f1e18a87790d2e01faace75aaaca38e53df437cdce2c0552464dda4af49c",
+        "0x68203f90e9d07dc5859259d7536e87a6ba9d345f2552b5b9de2999ddce9ce1bf",
+        "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a",
+        "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669",
+        "0x805b21d846b189efaeb0377d6bb0d201b3872a363e607c25088f025b0c6ae1f8",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb"
+      ],
+      "leafHashes": [
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+      ],
+      "proofs": [
+        [
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669",
+          "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a"
+        ],
+        [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669",
+          "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a"
+        ],
+        [
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0x805b21d846b189efaeb0377d6bb0d201b3872a363e607c25088f025b0c6ae1f8",
+          "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a"
+        ],
+        [
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0x805b21d846b189efaeb0377d6bb0d201b3872a363e607c25088f025b0c6ae1f8",
+          "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a"
+        ],
+        [
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0x68203f90e9d07dc5859259d7536e87a6ba9d345f2552b5b9de2999ddce9ce1bf"
+        ],
+        [
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0x68203f90e9d07dc5859259d7536e87a6ba9d345f2552b5b9de2999ddce9ce1bf"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x9012f1e18a87790d2e01faace75aaaca38e53df437cdce2c0552464dda4af49c"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510"
+          ],
+          "proof": [
+            "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669",
+            "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            5
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "simple-v1",
+        "tree": [
+          "0x9012f1e18a87790d2e01faace75aaaca38e53df437cdce2c0552464dda4af49c",
+          "0x68203f90e9d07dc5859259d7536e87a6ba9d345f2552b5b9de2999ddce9ce1bf",
+          "0xf0b49bb4b0d9396e0315755ceafaa280707b32e75e6c9053f5cdf2679dcd5c6a",
+          "0xd253a52d4cb00de2895e85f2529e2976e6aaaa5c18106b68ab66813e14415669",
+          "0x805b21d846b189efaeb0377d6bb0d201b3872a363e607c25088f025b0c6ae1f8",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb"
+        ],
+        "values": [
+          {
+            "value": "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "treeIndex": 10
+          },
+          {
+            "value": "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "treeIndex": 9
+          },
+          {
+            "value": "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "treeIndex": 8
+          },
+          {
+            "value": "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+            "treeIndex": 7
+          },
+          {
+            "value": "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "treeIndex": 6
+          },
+          {
+            "value": "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "treeIndex": 5
+          }
+        ]
+      }
+    },
+    {
+      "name": "simple-custom-hash",
+      "type": "simple",
+      "input": {
+        "sortLeaves": true,
+        "nodeHash": "custom",
+        "values": [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+        ]
+      },
+      "root": "0x6e58e28a4b5d31974eebd7048d12353c1f30e34b00d0aa778a10574d6fc3ade8",
+      "tree": [
+        "0x6e58e28a4b5d31974eebd7048d12353c1f30e34b00d0aa778a10574d6fc3ade8",
+        "0xd834e0713db506075769d906ea05602bb1f370d0d9303503096ca2c2349ebf9d",
+        "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf",
+        "0xbebf374f37f4f7db195dbf1b088917cf245c316b4fe5e1501b544595d74236e9",
+        "0xb02f7d7a7f1c95321beb0a41f822ccce9fd8d790016872f7fb942bb839802daa",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2"
+      ],
+      "leafHashes": [
+        "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+        "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+        "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+        "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+        "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+        "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+      ],
+      "proofs": [
+        [
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+          "0xbebf374f37f4f7db195dbf1b088917cf245c316b4fe5e1501b544595d74236e9",
+          "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf"
+        ],
+        [
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0xb02f7d7a7f1c95321beb0a41f822ccce9fd8d790016872f7fb942bb839802daa",
+          "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf"
+        ],
+        [
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0xbebf374f37f4f7db195dbf1b088917cf245c316b4fe5e1501b544595d74236e9",
+          "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf"
+        ],
+        [
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0xd834e0713db506075769d906ea05602bb1f370d0d9303503096ca2c2349ebf9d"
+        ],
+        [
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0xb02f7d7a7f1c95321beb0a41f822ccce9fd8d790016872f7fb942bb839802daa",
+          "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf"
+        ],
+        [
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xd834e0713db506075769d906ea05602bb1f370d0d9303503096ca2c2349ebf9d"
+        ]
+      ],
+      "multiProofs": [
+        {
+          "indices": [],
+          "leaves": [],
+          "proof": [
+            "0x6e58e28a4b5d31974eebd7048d12353c1f30e34b00d0aa778a10574d6fc3ade8"
+          ],
+          "proofFlags": []
+        },
+        {
+          "indices": [
+            0,
+            1
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510"
+          ],
+          "proof": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            5
+          ],
+          "leaves": [
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proofFlags": [
+            false,
+            false,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proof": [
+            "0xb02f7d7a7f1c95321beb0a41f822ccce9fd8d790016872f7fb942bb839802daa"
+          ],
+          "proofFlags": [
+            true,
+            true,
+            false,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483"
+          ],
+          "proof": [
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proofFlags": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "leaves": [
+            "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3"
+          ],
+          "proof": [],
+          "proofFlags": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "dump": {
+        "format": "simple-v1",
+        "tree": [
+          "0x6e58e28a4b5d31974eebd7048d12353c1f30e34b00d0aa778a10574d6fc3ade8",
+          "0xd834e0713db506075769d906ea05602bb1f370d0d9303503096ca2c2349ebf9d",
+          "0xd50c84f9b89532e1a6a40c1e14ab5b06fa720597ae3929f2bfeed49afd5c3daf",
+          "0xbebf374f37f4f7db195dbf1b088917cf245c316b4fe5e1501b544595d74236e9",
+          "0xb02f7d7a7f1c95321beb0a41f822ccce9fd8d790016872f7fb942bb839802daa",
+          "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+          "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+          "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+          "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+          "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+          "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2"
+        ],
+        "values": [
+          {
+            "value": "0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb",
+            "treeIndex": 9
+          },
+          {
+            "value": "0xb5553de315e0edf504d9150af82dafa5c4667fa618ed0a6f19c69b41166c5510",
+            "treeIndex": 7
+          },
+          {
+            "value": "0x0b42b6393c1f53060fe3ddbfcd7aadcca894465a5a438f69c87d790b2299b9b2",
+            "treeIndex": 10
+          },
+          {
+            "value": "0xf1918e8562236eb17adc8502332f4c9c82bc14e19bfc0aa10ab674ff75b3d2f3",
+            "treeIndex": 5
+          },
+          {
+            "value": "0xa8982c89d80987fb9a510e25981ee9170206be21af3c8e0eb312ef1d3382e761",
+            "treeIndex": 8
+          },
+          {
+            "value": "0xd1e8aeb79500496ef3dc2e57ba746a8315d048b7a664a2bf948db4fa91960483",
+            "treeIndex": 6
+          }
+        ],
+        "hash": "custom"
+      }
+    }
+  ]
+}

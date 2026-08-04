@@ -10,7 +10,7 @@ mirrors OpenZeppelin's ``MerkleTreeImpl`` base.
 
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from typing import Any, Generic, TypeVar
 
 from eth_typing import HexStr
@@ -104,8 +104,14 @@ class BaseMerkleTree(ABC, Generic[T]):
     def dump(self) -> Any:
         """Return a serializable description of the tree."""
 
+    @abstractmethod
     def to_json(self) -> dict:
-        return asdict(self.dump())
+        """Serialize to the ``@openzeppelin/merkle-tree`` JSON format.
+
+        The keys are camelCase (``treeIndex``, ``leafEncoding``) so the output is
+        directly loadable by the JS library, unlike the snake_case Python
+        dataclasses.
+        """
 
     @property
     def root(self) -> HexStr:
