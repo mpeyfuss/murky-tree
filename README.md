@@ -1,9 +1,18 @@
-# Murky-Tree
+```
+███╗   ███╗██╗   ██╗██████╗ ██╗  ██╗██╗   ██╗    ████████╗██████╗ ███████╗███████╗
+████╗ ████║██║   ██║██╔══██╗██║ ██╔╝╚██╗ ██╔╝    ╚══██╔══╝██╔══██╗██╔════╝██╔════╝
+██╔████╔██║██║   ██║██████╔╝█████╔╝  ╚████╔╝        ██║   ██████╔╝█████╗  █████╗  
+██║╚██╔╝██║██║   ██║██╔══██╗██╔═██╗   ╚██╔╝         ██║   ██╔══██╗██╔══╝  ██╔══╝  
+██║ ╚═╝ ██║╚██████╔╝██║  ██║██║  ██╗   ██║          ██║   ██║  ██║███████╗███████╗
+╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝
+```
 
 *A Python library to generate Merkle trees and Merkle proofs forked from [@openzeppelin/merkle-tree](https://github.com/OpenZeppelin/merkle-tree) and [stakewise/multiproof](https://github.com/stakewise/multiproof)*
 
 Well suited for airdrops and similar mechanisms in combination with OpenZeppelin Contracts MerkleProof utilities.
 [`MerkleProof`]: <https://docs.openzeppelin.com/contracts/5.x/api/utils#MerkleProof>
+
+
 
 ## Quick Start
 
