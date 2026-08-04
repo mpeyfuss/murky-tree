@@ -1,6 +1,6 @@
-# A Python fork of [@openzeppelin/merkle-tree](https://github.com/OpenZeppelin/merkle-tree)
+# Murky-Tree
 
-A Python library to generate Merkle trees and Merkle proofs.
+*A Python library to generate Merkle trees and Merkle proofs forked from [@openzeppelin/merkle-tree](https://github.com/OpenZeppelin/merkle-tree) and [stakewise/multiproof](https://github.com/stakewise/multiproof)*
 
 Well suited for airdrops and similar mechanisms in combination with OpenZeppelin Contracts MerkleProof utilities.
 [`MerkleProof`]: <https://docs.openzeppelin.com/contracts/5.x/api/utils#MerkleProof>
@@ -68,6 +68,9 @@ for i, leaf in enumerate(tree.values):
 ```
 
 In practice this might be done in a frontend application prior to submitting the proof on-chain, with the address looked up being that of the connected wallet.
+
+Proving one leaf at a time, as above, is the common case. To prove several leaves
+in a single proof, see [Multiproofs](#multiproofs) under Advanced usage.
 
 ### Validating a Proof in Solidity
 
@@ -137,11 +140,17 @@ proof = tree.get_proof(0)
 assert SimpleMerkleTree.verify(tree.root, leaves[0], proof)
 ```
 
-Dump and load work the same way as the standard tree, using the `simple-v1` format:
+Serialization works the same way as the standard tree, using the `simple-v1`
+format. Use `dump()`/`load()` to keep a typed copy inside Python, and
+`to_json()`/`from_json()` to write a file or interoperate with the JS library
+(see [Serialization](#serialization-and-json-interoperability)):
 
 ```python
 data = tree.dump()
 tree = SimpleMerkleTree.load(data)
+
+json_tree = tree.to_json()                  # JS-compatible dict
+tree = SimpleMerkleTree.from_json(json_tree)
 ```
 
 ### Custom node hashing
@@ -273,24 +282,51 @@ bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(addr, amount))));
 
 This is an opinionated design that we believe will offer the best out of the box experience for most users. However, there are advanced use cases where a different leaf hashing algorithm may be needed. For those, [`SimpleMerkleTree`](#simple-merkle-trees) builds a tree over raw `bytes32` leaves (which you can hash however you like) and supports a custom node hash.
 
-### Leaf ordering
+### Multiproofs
 
-Each leaf of a Merkle tree can be proven individually. The relative ordering of leaves is mostly irrelevant when the only objective is to prove the inclusion of individual leaves in the tree. Proving multiple leaves at once is however a little bit more difficult.
+Proving one leaf at a time (see [Obtaining a Proof](#obtaining-a-proof)) is the
+common case, and **most people never need anything else** — if users only ever
+prove a single entry (a typical airdrop claim), skip this section. A multiproof is
+worth reaching for only when you verify *several* leaves together in one onchain
+transaction — e.g. a "claim all" that settles a user's multiple allocations in a
+single `multiProofVerify` call instead of one transaction per leaf. When you do
+need that, pass the indices (or values) you want to prove:
 
-This library proposes a mechanism to prove (and verify) that sets of leaves are included in the tree. These "multiproofs" can also be verified onchain using the implementation available in `@openzeppelin/contracts`. This mechanism requires the leaves to be ordered respective to their position in the tree. For example, if the tree leaves are (in hex form) `[ 0xAA...AA, 0xBB...BB, 0xCC...CC, 0xDD...DD]`, then you'd be able to prove `[0xBB...BB, 0xDD...DD]` as a subset of the leaves, but not `[0xDD...DD, 0xBB...BB]`.
+```python
+from murky_tree import StandardMerkleTree
 
-Since this library knows the entire tree, you can generate a multiproof with the requested leaves in any order. The library will re-order them so that they appear inside the proof in the correct order. The `MultiProof` object returned by `tree.getMultiProof(...)` will have the leaves ordered according to their position in the tree, and not in the order in which you provided them.
+values = [
+    ["0x1111111111111111111111111111111111111111", 5000000000000000000],
+    ["0x2222222222222222222222222222222222222222", 2500000000000000000],
+    ["0x3333333333333333333333333333333333333333", 1000000000000000000],
+]
+tree = StandardMerkleTree.of(values, ["address", "uint256"])
 
-By default, the library orders the leaves according to their hash when building the tree. This is so that a smart contract can build the hashes of a set of leaves and order them correctly without any knowledge of the tree itself. Said differently, it is simpler for a smart contract to process a multiproof for leaves that it rebuilt itself if the corresponding tree is ordered.
+multiproof = tree.get_multi_proof([0, 2])            # subset by index (or value)
+assert tree.verify_multi_proof_leaf(multiproof)      # against the full tree
+assert StandardMerkleTree.verify_multi_proof(        # from root + encoding alone
+    tree.root, ["address", "uint256"], multiproof
+)
+```
 
-However, some trees are constructed iteratively from unsorted data, causing the leaves to be unsorted as well. For this library to be able to represent such trees, the call to `StandardMerkleTree.of` includes an option to disable sorting. Using that option, the leaves are kept in the order in which they were provided. Note that this option has no effect on your ability to generate and verify proofs and multiproofs in Python, but that it may introduce challenges when verifying multiproofs onchain. We recommend only using it for building a representation of trees that are built (onchain) using an iterative process.
+Multiproofs require the proven leaves to be in tree order. This library knows the
+whole tree, so it reorders them for you — `multiproof.leaves` may come back in a
+different order than you requested, and that returned order is the one a smart
+contract must submit. Keeping `sort_leaves=True` (the default) lets a contract
+rebuild and order the leaves without any knowledge of the tree; disable it only to
+represent trees built onchain by an iterative process, which complicates onchain
+verification.
+
+The multiproof format and its onchain verification are OpenZeppelin's; for the full
+details see the [`@openzeppelin/merkle-tree` multiproof docs](https://github.com/OpenZeppelin/merkle-tree#leaf-ordering)
+and [`MerkleProof`]'s `multiProofVerify`.
 
 ## API & Examples
 
 > **Note**
 > Consider reading the array of elements from a CSV file for easy interoperability with spreadsheets or other data processing pipelines.
-> **Note**
-> By default, leaves are sorted according to their hash. This is done so that multiproof generated by the library can more easily be verified onchain. This can be disabled using the optional third argument. See the [Leaf ordering](#leaf-ordering) section for more details.
+>
+> By default, leaves are sorted according to their hash. This is done so that multiproofs generated by the library can more easily be verified onchain. This can be disabled using the optional `sort_leaves` argument. See the [Multiproofs](#multiproofs) section for more details.
 
 ### `StandardMerkleTree`
 
@@ -347,7 +383,12 @@ Loads the tree from a description previously returned by `tree.dump`.
 #### `StandardMerkleTree.verify`
 
 ```python3
-verified = StandardMerkleTree.verify(root, ["address", "uint"], ["alice", "100"], proof)
+verified = StandardMerkleTree.verify(
+    root,
+    ["address", "uint256"],
+    ["0x1111111111111111111111111111111111111111", 5000000000000000000],
+    proof,
+)
 ```
 
 Returns a boolean that is `true` when the proof verifies that the value is contained in the tree given only the proof, Merkle root, and encoding.
@@ -406,7 +447,7 @@ Returns a proof for the `i`th value in the tree. Indices refer to the position o
 Also accepts a value instead of an index, but this will be less efficient. It will fail if the value is not found in the tree.
 
 ```python3
-proof = tree.getProof(value)  # e.g. [alice, '100']
+proof = tree.get_proof(value)  # e.g. ["0x1111111111111111111111111111111111111111", 5000000000000000000]
 ```
 
 #### `tree.get_multi_proof`
@@ -425,21 +466,21 @@ The multiproof returned contains an array with the leaves that are being proven.
 Also accepts values instead of indices, but this will be less efficient. It will fail if any of the values is not found in the tree.
 
 ```python3
-multiproof = tree.get_multi_roof(
+multiproof = tree.get_multi_proof(
     [value1, value2]
-)  # e.g. [[alice, '100'], [bob, '200']]
+)  # e.g. [["0x1111...1111", 5000000000000000000], ["0x2222...2222", 2500000000000000000]]
 ```
 
-#### `tree.verify`
+#### `tree.verify_leaf`
 
 ```python3
-tree.verify(i, proof)
-tree.verify(value, proof)  # e.g. [alice, '100']
+tree.verify_leaf(i, proof)
+tree.verify_leaf(value, proof)  # e.g. ["0x1111111111111111111111111111111111111111", 5000000000000000000]
 ```
 
 Returns a boolean that is `true` when the proof verifies that the value is contained in the tree.
 
-#### `tree.verify_multi_proof`
+#### `tree.verify_multi_proof_leaf`
 
 ```python3
 from murky_tree import MultiProof
@@ -453,7 +494,7 @@ Returns a boolean that is `true` when the multi-proof verifies that the values a
 #### `tree.leaf_hash`
 
 ```python3
-leaf = tree.leaf_hash(value)  # e.g. [alice, '100']
+leaf = tree.leaf_hash(value)  # e.g. ["0x1111111111111111111111111111111111111111", 5000000000000000000]
 ```
 
 Returns the leaf hash of the value, defined per tree type.
@@ -461,7 +502,7 @@ Returns the leaf hash of the value, defined per tree type.
 It corresponds to the following expression in Solidity:
 
 ```solidity
-bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(alice, 100))));
+bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(addr, amount))));
 ```
 
 #### `Rendering the tree`
@@ -478,3 +519,16 @@ Returns a visual representation of the tree that can be useful for debugging.
 uv sync
 uv run pytest
 ```
+
+## License & attribution
+
+`murky-tree` is released under the [MIT License](LICENSE).
+
+It is a Python fork of [`@openzeppelin/merkle-tree`](https://github.com/OpenZeppelin/merkle-tree),
+derived by way of a Stakewise Labs Python port. The tree layout and JSON format are
+kept byte-for-byte compatible with the original so trees can be shared with the
+JavaScript library. Per the MIT License, the upstream copyright notices are retained
+in [`LICENSE`](LICENSE):
+
+- OpenZeppelin (zOS Global Limited and contributors) — original `@openzeppelin/merkle-tree`
+- Stakewise Labs — Python port
