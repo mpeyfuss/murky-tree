@@ -1,6 +1,6 @@
 [project]
 name = "murky-tree"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Python library to generate merkle trees and merkle proofs for Ethereum use."
 readme = "README.md"
 license = "MIT"
@@ -18,6 +18,9 @@ dependencies = [
 [project.urls]
 repository = "https://github.com/mpeyfuss/murky-tree"
 
+[tool.uv]
+exclude-newer = "7 days"
+
 [build-system]
 requires = ["uv_build>=0.11.7,<0.12"]
 build-backend = "uv_build"
@@ -27,8 +30,8 @@ module-root = ""
 
 [dependency-groups]
 dev = [
-    "ruff>=0.16.1",
-    "ty>=0.0.65",
+    "ruff>=0.16.0",
+    "ty>=0.0.64",
     "pytest>=9.1.1",
     "pre-commit>=4.6.1",
 ]
