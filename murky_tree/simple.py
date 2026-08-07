@@ -27,8 +27,8 @@ def format_leaf(value: BytesLike) -> bytes:
 
 @dataclass
 class SimpleMerkleTreeData:
-    tree: list[HexStr]
-    values: list[LeafValue[HexStr]]
+    tree: list[bytes]
+    values: list[LeafValue[bytes]]
     format: str = "simple-v1"
     # "custom" when the tree was built with a non-default node hash; otherwise None.
     hash: str | None = None
@@ -83,13 +83,7 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
                 if node_hash is not None
                 else "Data expects a custom node hashing function"
             )
-        values = [
-            LeafValue(value=_to_bytes32(v.value), tree_index=v.tree_index)
-            for v in data.values
-        ]
-        tree = SimpleMerkleTree(
-            [to_bytes(hexstr=x) for x in data.tree], values, node_hash
-        )
+        tree = SimpleMerkleTree(data.tree, data.values, node_hash)
         tree.validate()
         return tree
 
@@ -116,11 +110,8 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
     def dump(self) -> SimpleMerkleTreeData:
         return SimpleMerkleTreeData(
             format="simple-v1",
-            tree=[to_hex(v) for v in self.tree],
-            values=[
-                LeafValue(value=to_hex(v.value), tree_index=v.tree_index)
-                for v in self.values
-            ],
+            tree=self.tree,
+            values=self.values,
             hash="custom" if self._custom_node_hash else None,
         )
 
@@ -141,9 +132,11 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
     @staticmethod
     def from_json(data: dict, node_hash: NodeHash | None = None) -> "SimpleMerkleTree":
         tree_data = SimpleMerkleTreeData(
-            tree=data["tree"],
+            tree=[to_bytes(hexstr=x) for x in data["tree"]],
             values=[
-                LeafValue(value=item["value"], tree_index=item["treeIndex"])
+                LeafValue(
+                    value=to_bytes(hexstr=item["value"]), tree_index=item["treeIndex"]
+                )
                 for item in data["values"]
             ],
             format=data.get("format", "simple-v1"),

@@ -1,6 +1,6 @@
 [project]
 name = "murky-tree"
-version = "1.0.1"
+version = "1.1.0"
 description = "A Python library to generate merkle trees and merkle proofs for Ethereum use."
 readme = "README.md"
 license = "MIT"

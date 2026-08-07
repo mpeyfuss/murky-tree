@@ -17,7 +17,7 @@ from murky_tree.utils import (
 
 @dataclass
 class StandardMerkleTreeData(Generic[T]):
-    tree: list[HexStr]
+    tree: list[bytes]
     values: list[LeafValue[T]]
     leaf_encoding: list[str]
     format: str = "standard-v1"
@@ -52,7 +52,7 @@ class StandardMerkleTree(BaseMerkleTree[T]):
         if data.format != "standard-v1":
             raise ValueError(f"Unknown format '{data.format}'")
         return StandardMerkleTree(
-            [to_bytes(hexstr=x) for x in data.tree],
+            data.tree,
             data.values,
             data.leaf_encoding,
         )
@@ -78,7 +78,7 @@ class StandardMerkleTree(BaseMerkleTree[T]):
     def dump(self) -> StandardMerkleTreeData[T]:
         return StandardMerkleTreeData(
             format="standard-v1",
-            tree=[to_hex(v) for v in self.tree],
+            tree=self.tree,
             values=self.values,
             leaf_encoding=self.leaf_encoding,
         )
@@ -101,7 +101,7 @@ class StandardMerkleTree(BaseMerkleTree[T]):
     def from_json(data: dict) -> "StandardMerkleTree[T]":
         leaf_encoding = data["leafEncoding"]
         tree_data = StandardMerkleTreeData(
-            tree=data["tree"],
+            tree=[to_bytes(hexstr=x) for x in data["tree"]],
             values=[
                 LeafValue(
                     value=decode_values_from_json(item["value"], leaf_encoding),

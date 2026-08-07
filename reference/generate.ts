@@ -143,6 +143,17 @@ const NESTED_VALUES = [
   [["0x3333333333333333333333333333333333333333", "0"], []],
 ];
 
+// Bytes leaves for the standard tree: a fixed bytes32 alongside a dynamic
+// `bytes` and a uint256, so a single leaf exercises both the fixed- and
+// dynamic-width bytes <-> hex (de)serialization plus an integer at the JSON
+// boundary. Bytes arrive as hex strings (the JSON-safe form).
+const BYTES_ENCODING = ["bytes32", "bytes", "uint256"];
+const BYTES_VALUES = [
+  ["0x" + "11".repeat(32), "0xdeadbeef", "1000000000000000000"],
+  ["0x" + "22".repeat(32), "0xc0ffeecafe", "2500000000000000000"],
+  ["0x" + "33".repeat(32), "0x00", "0"],
+];
+
 // Simple-tree leaves: already-hashed bytes32 values.
 const SIMPLE_LEAVES = [..."abcdef"].map(keccakText);
 
@@ -155,6 +166,8 @@ const vectors = {
     standardCase("standard-airdrop-sorted", ["address", "uint256"], true, AIRDROP_VALUES),
     standardCase("standard-airdrop-unsorted", ["address", "uint256"], false, AIRDROP_VALUES),
     standardCase("standard-nested-sorted", NESTED_ENCODING, true, NESTED_VALUES),
+    standardCase("standard-bytes32-sorted", BYTES_ENCODING, true, BYTES_VALUES),
+    standardCase("standard-bytes32-unsorted", BYTES_ENCODING, false, BYTES_VALUES),
     simpleCase("simple-sorted", true, SIMPLE_LEAVES, false),
     simpleCase("simple-unsorted", false, SIMPLE_LEAVES, false),
     simpleCase("simple-custom-hash", true, SIMPLE_LEAVES, true),

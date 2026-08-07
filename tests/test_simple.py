@@ -8,7 +8,6 @@ from murky_tree.standard import standard_leaf_hash
 from murky_tree.utils import keccak
 
 ZERO_BYTES = bytes(32)
-ZERO = to_hex(ZERO_BYTES)
 
 
 def make_tree(s: str, sort_leaves: bool = True) -> tuple[list[bytes], SimpleMerkleTree]:
@@ -173,8 +172,8 @@ class TestSimpleMerkleTree:
             tree = SimpleMerkleTree.load(
                 SimpleMerkleTreeData(
                     format="simple-v1",
-                    tree=[ZERO],
-                    values=[LeafValue(value=to_hex(keccak(text="a")), tree_index=0)],
+                    tree=[ZERO_BYTES],
+                    values=[LeafValue(value=keccak(text="a"), tree_index=0)],
                 )
             )
             tree.get_proof(0)

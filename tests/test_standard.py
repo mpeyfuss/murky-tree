@@ -1,11 +1,9 @@
 import pytest
-from eth_utils import to_hex
 
 from murky_tree.standard import LeafValue, StandardMerkleTree, StandardMerkleTreeData
 from murky_tree.utils import keccak
 
 ZERO_BYTES = bytes(32)
-ZERO = to_hex(ZERO_BYTES)
 
 
 def make_tree(
@@ -107,7 +105,7 @@ class TestStandartTestCase:
             tree1 = StandardMerkleTree.load(
                 StandardMerkleTreeData(
                     format="standard-v1",
-                    tree=[ZERO],
+                    tree=[ZERO_BYTES],
                     values=[LeafValue(value=[0], tree_index=0)],
                     leaf_encoding=["uint256"],
                 )
@@ -119,7 +117,7 @@ class TestStandartTestCase:
             tree2 = StandardMerkleTree.load(
                 StandardMerkleTreeData(
                     format="standard-v1",
-                    tree=[ZERO, ZERO, to_hex(keccak(keccak(ZERO_BYTES)))],
+                    tree=[ZERO_BYTES, ZERO_BYTES, keccak(keccak(ZERO_BYTES))],
                     values=[LeafValue(value=[0], tree_index=2)],
                     leaf_encoding=["uint256"],
                 )
