@@ -1,0 +1,1092 @@
+{
+  "shas": {
+    "1.1.0": "049b7e1afac2d150611670c8da4f4bf1d883f309",
+    "v1.2": "d2d074a676f230ca2713d48bf6593d101104fc70",
+    "v2": "cba3f96dfe9862e2c26727d9f28e88880a7fb26d"
+  },
+  "data": {
+    "1.1.0": {
+      "meta": {
+        "murky_tree_version": "1.1.0",
+        "murky_tree_path": "/Users/mpeyfuss/MP/murky-tree/benchmarks/.worktrees/1.1.0/.venv/lib/python3.14/site-packages/murky_tree/__init__.py",
+        "python": "3.14.3",
+        "implementation": "CPython",
+        "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O"
+      },
+      "roots": {
+        "100": {
+          "standard": "0x086a301275fa0bef53960dbd93516aa15b0d51a8bb2494a0c057bdf57127e7fe",
+          "simple": "0xf222de9c7b5b1621d807733c41a8cdfa0ab3fde3bad7533451fd9af2321e8ef1"
+        },
+        "1000": {
+          "standard": "0xd1e3126f4061a68ffa97ef1baf5ee9beef69e71a2546c37cd6b31e0a0a9ccfdd",
+          "simple": "0x53c712d6a3da7ef262ff00ef31f11c023bfa57907457b0c27c200ea37f344d01"
+        },
+        "10000": {
+          "standard": "0x8ba18d45f0a90c685bb8c8465151fb3cb501ba32fabfae43c3c2ec140c4abc5d",
+          "simple": "0x198a147373433c192c97088b97efb716608f7e61f1b0cf812d2abdc00fa5c994"
+        }
+      },
+      "results": [
+        {
+          "name": "Standard.of",
+          "size": 100,
+          "best": 0.004166861742057584,
+          "median": 0.004181933075993915,
+          "loops": 66
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 100,
+          "best": 5.7318964900751146e-05,
+          "median": 5.7498186043101766e-05,
+          "loops": 5214
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 100,
+          "best": 7.67968114652432e-05,
+          "median": 7.703569196525663e-05,
+          "loops": 3766
+        },
+        {
+          "name": "Standard.verify",
+          "size": 100,
+          "best": 6.276300236424233e-05,
+          "median": 6.327535458961523e-05,
+          "loops": 4230
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 100,
+          "best": 6.012818845299247e-05,
+          "median": 6.0233365980338975e-05,
+          "loops": 4574
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 100,
+          "best": 0.001005579675349625,
+          "median": 0.001007210438825844,
+          "loops": 376
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 100,
+          "best": 0.0009822874381276087,
+          "median": 0.0009970072202158558,
+          "loops": 404
+        },
+        {
+          "name": "Standard.validate",
+          "size": 100,
+          "best": 0.0022954293152516974,
+          "median": 0.0023108328335053685,
+          "loops": 168
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 100,
+          "best": 0.000236261305774462,
+          "median": 0.00023848806269282153,
+          "loops": 1452
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 100,
+          "best": 0.0022988723998423667,
+          "median": 0.002320333851093892,
+          "loops": 80
+        },
+        {
+          "name": "Simple.of",
+          "size": 100,
+          "best": 0.001170608307226266,
+          "median": 0.0011763008541329214,
+          "loops": 322
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 100,
+          "best": 4.390647768370621e-05,
+          "median": 4.445018327963232e-05,
+          "loops": 6498
+        },
+        {
+          "name": "Simple.verify",
+          "size": 100,
+          "best": 4.881096431457361e-05,
+          "median": 4.899049335861849e-05,
+          "loops": 5128
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 100,
+          "best": 0.0005223319283359569,
+          "median": 0.000524590530935047,
+          "loops": 712
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 100,
+          "best": 0.0005036019910109903,
+          "median": 0.0005443709203061543,
+          "loops": 766
+        },
+        {
+          "name": "Simple.validate",
+          "size": 100,
+          "best": 0.0007938468491577751,
+          "median": 0.0008063932521411118,
+          "loops": 484
+        },
+        {
+          "name": "Standard.of",
+          "size": 1000,
+          "best": 0.04410948950680904,
+          "median": 0.044400718732504174,
+          "loops": 4
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 1000,
+          "best": 7.946883716513232e-05,
+          "median": 7.993318061271185e-05,
+          "loops": 3820
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 1000,
+          "best": 9.856924404848223e-05,
+          "median": 9.880657935891314e-05,
+          "loops": 3188
+        },
+        {
+          "name": "Standard.verify",
+          "size": 1000,
+          "best": 8.481720822743613e-05,
+          "median": 8.665533467806562e-05,
+          "loops": 3938
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 1000,
+          "best": 8.128895349102696e-05,
+          "median": 8.167821913355966e-05,
+          "loops": 3870
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0014840011643245817,
+          "median": 0.0015246183322742582,
+          "loops": 250
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0014746965912525497,
+          "median": 0.001516581678371285,
+          "loops": 252
+        },
+        {
+          "name": "Standard.validate",
+          "size": 1000,
+          "best": 0.02274448699608911,
+          "median": 0.022800849001214374,
+          "loops": 16
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 1000,
+          "best": 0.0024079490766679454,
+          "median": 0.0024459131948080743,
+          "loops": 144
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 1000,
+          "best": 0.023331963500822894,
+          "median": 0.023713666625553742,
+          "loops": 16
+        },
+        {
+          "name": "Simple.of",
+          "size": 1000,
+          "best": 0.011845044246001635,
+          "median": 0.01203646093927091,
+          "loops": 16
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 1000,
+          "best": 6.123986885946994e-05,
+          "median": 6.204720640620549e-05,
+          "loops": 3866
+        },
+        {
+          "name": "Simple.verify",
+          "size": 1000,
+          "best": 6.724990374281391e-05,
+          "median": 6.777583495137606e-05,
+          "loops": 4332
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0009695505776273256,
+          "median": 0.0009821301231529305,
+          "loops": 374
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0009720877766122257,
+          "median": 0.0009887583555563868,
+          "loops": 394
+        },
+        {
+          "name": "Simple.validate",
+          "size": 1000,
+          "best": 0.007737938372883946,
+          "median": 0.007888193562394008,
+          "loops": 48
+        },
+        {
+          "name": "Standard.of",
+          "size": 10000,
+          "best": 0.4197304170811549,
+          "median": 0.4294977500103414,
+          "loops": 1
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 10000,
+          "best": 9.93828006868487e-05,
+          "median": 0.00010023962966689233,
+          "loops": 3146
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 10000,
+          "best": 0.00011604504502279119,
+          "median": 0.00011629038402082135,
+          "loops": 2664
+        },
+        {
+          "name": "Standard.verify",
+          "size": 10000,
+          "best": 0.00010336891706838867,
+          "median": 0.0001045353838317275,
+          "loops": 2918
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 10000,
+          "best": 0.00010144120387563746,
+          "median": 0.00010176302802598024,
+          "loops": 3566
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.002153637499877197,
+          "median": 0.0021641526939621303,
+          "loops": 170
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.002181635181345469,
+          "median": 0.0022164457841427065,
+          "loops": 176
+        },
+        {
+          "name": "Standard.validate",
+          "size": 10000,
+          "best": 0.23495950002688915,
+          "median": 0.23633041698485613,
+          "loops": 1
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 10000,
+          "best": 0.02337877869285876,
+          "median": 0.02351722912862897,
+          "loops": 16
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 10000,
+          "best": 0.22453291690908372,
+          "median": 0.22716345801018178,
+          "loops": 1
+        },
+        {
+          "name": "Simple.of",
+          "size": 10000,
+          "best": 0.11836954153841361,
+          "median": 0.11944204149767756,
+          "loops": 2
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 10000,
+          "best": 8.135951894133458e-05,
+          "median": 8.175774779729274e-05,
+          "loops": 2748
+        },
+        {
+          "name": "Simple.verify",
+          "size": 10000,
+          "best": 8.902596977201052e-05,
+          "median": 8.92580290509467e-05,
+          "loops": 3342
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0017070344569779432,
+          "median": 0.0017126262022289806,
+          "loops": 208
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.001740823008956602,
+          "median": 0.0017417109163428567,
+          "loops": 226
+        },
+        {
+          "name": "Simple.validate",
+          "size": 10000,
+          "best": 0.08077751050586812,
+          "median": 0.08191580226412043,
+          "loops": 4
+        }
+      ]
+    },
+    "v1.2": {
+      "meta": {
+        "murky_tree_version": "1.2.0",
+        "murky_tree_path": "/Users/mpeyfuss/MP/murky-tree/benchmarks/.worktrees/v1.2/.venv/lib/python3.14/site-packages/murky_tree/__init__.py",
+        "python": "3.14.3",
+        "implementation": "CPython",
+        "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O"
+      },
+      "roots": {
+        "100": {
+          "standard": "0x086a301275fa0bef53960dbd93516aa15b0d51a8bb2494a0c057bdf57127e7fe",
+          "simple": "0xf222de9c7b5b1621d807733c41a8cdfa0ab3fde3bad7533451fd9af2321e8ef1"
+        },
+        "1000": {
+          "standard": "0xd1e3126f4061a68ffa97ef1baf5ee9beef69e71a2546c37cd6b31e0a0a9ccfdd",
+          "simple": "0x53c712d6a3da7ef262ff00ef31f11c023bfa57907457b0c27c200ea37f344d01"
+        },
+        "10000": {
+          "standard": "0x8ba18d45f0a90c685bb8c8465151fb3cb501ba32fabfae43c3c2ec140c4abc5d",
+          "simple": "0x198a147373433c192c97088b97efb716608f7e61f1b0cf812d2abdc00fa5c994"
+        }
+      },
+      "results": [
+        {
+          "name": "Standard.of",
+          "size": 100,
+          "best": 0.0018019967918427517,
+          "median": 0.001810434937942773,
+          "loops": 130
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 100,
+          "best": 4.11450217240499e-05,
+          "median": 4.121141886177874e-05,
+          "loops": 6212
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 100,
+          "best": 5.70674419560942e-05,
+          "median": 5.7159843869620564e-05,
+          "loops": 4342
+        },
+        {
+          "name": "Standard.verify",
+          "size": 100,
+          "best": 4.7056481064926784e-05,
+          "median": 4.755725126861438e-05,
+          "loops": 4382
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 100,
+          "best": 4.395299003614424e-05,
+          "median": 4.4268190649556875e-05,
+          "loops": 5014
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 100,
+          "best": 0.0007515200729545975,
+          "median": 0.000755978238708547,
+          "loops": 494
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 100,
+          "best": 0.0007199640928196128,
+          "median": 0.000724782197115322,
+          "loops": 528
+        },
+        {
+          "name": "Standard.validate",
+          "size": 100,
+          "best": 0.0017358626129927936,
+          "median": 0.0017410784546571137,
+          "loops": 222
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 100,
+          "best": 0.00023514643445156935,
+          "median": 0.0002354678898826388,
+          "loops": 1526
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 100,
+          "best": 0.0018736072368674764,
+          "median": 0.001884553510401594,
+          "loops": 190
+        },
+        {
+          "name": "Simple.of",
+          "size": 100,
+          "best": 0.0004310151162763061,
+          "median": 0.0004316102709285482,
+          "loops": 860
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 100,
+          "best": 2.749196175895977e-05,
+          "median": 2.7616014139287124e-05,
+          "loops": 8838
+        },
+        {
+          "name": "Simple.verify",
+          "size": 100,
+          "best": 3.2345531645406683e-05,
+          "median": 3.252022623539317e-05,
+          "loops": 6794
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 100,
+          "best": 0.00029676015982849297,
+          "median": 0.0002975843969925845,
+          "loops": 1214
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 100,
+          "best": 0.0002664229169193491,
+          "median": 0.0002671393073636436,
+          "loops": 1360
+        },
+        {
+          "name": "Simple.validate",
+          "size": 100,
+          "best": 0.0003245268895003041,
+          "median": 0.00032484174334363657,
+          "loops": 1204
+        },
+        {
+          "name": "Standard.of",
+          "size": 1000,
+          "best": 0.018341731250984594,
+          "median": 0.018355991650605575,
+          "loops": 20
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 1000,
+          "best": 5.4619828559474916e-05,
+          "median": 5.497232575800535e-05,
+          "loops": 5366
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 1000,
+          "best": 7.011531037228011e-05,
+          "median": 7.021340854808294e-05,
+          "loops": 4614
+        },
+        {
+          "name": "Standard.verify",
+          "size": 1000,
+          "best": 6.11045724527484e-05,
+          "median": 6.144341861798168e-05,
+          "loops": 4928
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 1000,
+          "best": 5.824301393974536e-05,
+          "median": 5.853470274981516e-05,
+          "loops": 5672
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0010619399356328997,
+          "median": 0.0010727546313962742,
+          "loops": 342
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0010559662582438803,
+          "median": 0.0010596227363313792,
+          "loops": 368
+        },
+        {
+          "name": "Standard.validate",
+          "size": 1000,
+          "best": 0.017239115497266703,
+          "median": 0.017740179953927345,
+          "loops": 22
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 1000,
+          "best": 0.002323935993565583,
+          "median": 0.002336432982000511,
+          "loops": 166
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 1000,
+          "best": 0.018976970796938986,
+          "median": 0.01898770414991304,
+          "loops": 20
+        },
+        {
+          "name": "Simple.of",
+          "size": 1000,
+          "best": 0.00439922301103996,
+          "median": 0.004410571488816376,
+          "loops": 88
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 1000,
+          "best": 3.9715919377668866e-05,
+          "median": 3.984017533469004e-05,
+          "loops": 7728
+        },
+        {
+          "name": "Simple.verify",
+          "size": 1000,
+          "best": 4.6160632145382323e-05,
+          "median": 4.7029845052271336e-05,
+          "loops": 6228
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0006073448453925698,
+          "median": 0.0006087251906712098,
+          "loops": 304
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0006017334676618057,
+          "median": 0.0006047569226563698,
+          "loops": 620
+        },
+        {
+          "name": "Simple.validate",
+          "size": 1000,
+          "best": 0.0032993993159228315,
+          "median": 0.0033230194511512916,
+          "loops": 60
+        },
+        {
+          "name": "Standard.of",
+          "size": 10000,
+          "best": 0.1861059790244326,
+          "median": 0.18693037499906495,
+          "loops": 2
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 10000,
+          "best": 6.756287955932883e-05,
+          "median": 6.781013831892145e-05,
+          "loops": 2964
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 10000,
+          "best": 8.332514121618452e-05,
+          "median": 8.375496299077685e-05,
+          "loops": 3484
+        },
+        {
+          "name": "Standard.verify",
+          "size": 10000,
+          "best": 7.520943173405392e-05,
+          "median": 7.689551610033687e-05,
+          "loops": 3414
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 10000,
+          "best": 7.21946539316896e-05,
+          "median": 7.237657540947322e-05,
+          "loops": 4840
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0015044133403894155,
+          "median": 0.0015059009115133404,
+          "loops": 238
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0015424966681748628,
+          "median": 0.0015573073318228125,
+          "loops": 250
+        },
+        {
+          "name": "Standard.validate",
+          "size": 10000,
+          "best": 0.17165520851267502,
+          "median": 0.18166835402371362,
+          "loops": 2
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 10000,
+          "best": 0.0230807604311849,
+          "median": 0.023118580684240442,
+          "loops": 16
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 10000,
+          "best": 0.18516562500735745,
+          "median": 0.18699243746232241,
+          "loops": 2
+        },
+        {
+          "name": "Simple.of",
+          "size": 10000,
+          "best": 0.04421071874094196,
+          "median": 0.04426801562658511,
+          "loops": 8
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 10000,
+          "best": 5.230036654496474e-05,
+          "median": 5.256402942156858e-05,
+          "loops": 4114
+        },
+        {
+          "name": "Simple.verify",
+          "size": 10000,
+          "best": 6.065947404782969e-05,
+          "median": 6.092399557384991e-05,
+          "loops": 5202
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0010872150065979974,
+          "median": 0.0010901602678262672,
+          "loops": 306
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0011367834820356663,
+          "median": 0.0011375675863486581,
+          "loops": 336
+        },
+        {
+          "name": "Simple.validate",
+          "size": 10000,
+          "best": 0.03293131669051945,
+          "median": 0.03315250410232693,
+          "loops": 10
+        }
+      ]
+    },
+    "v2": {
+      "meta": {
+        "murky_tree_version": "2.0.0",
+        "murky_tree_path": "/Users/mpeyfuss/MP/murky-tree/benchmarks/.worktrees/v2/.venv/lib/python3.14/site-packages/murky_tree/__init__.py",
+        "python": "3.14.3",
+        "implementation": "CPython",
+        "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O"
+      },
+      "roots": {
+        "100": {
+          "standard": "0x086a301275fa0bef53960dbd93516aa15b0d51a8bb2494a0c057bdf57127e7fe",
+          "simple": "0xf222de9c7b5b1621d807733c41a8cdfa0ab3fde3bad7533451fd9af2321e8ef1"
+        },
+        "1000": {
+          "standard": "0xd1e3126f4061a68ffa97ef1baf5ee9beef69e71a2546c37cd6b31e0a0a9ccfdd",
+          "simple": "0x53c712d6a3da7ef262ff00ef31f11c023bfa57907457b0c27c200ea37f344d01"
+        },
+        "10000": {
+          "standard": "0x8ba18d45f0a90c685bb8c8465151fb3cb501ba32fabfae43c3c2ec140c4abc5d",
+          "simple": "0x198a147373433c192c97088b97efb716608f7e61f1b0cf812d2abdc00fa5c994"
+        }
+      },
+      "results": [
+        {
+          "name": "Standard.of",
+          "size": 100,
+          "best": 0.0009598874574148063,
+          "median": 0.0009605472160961909,
+          "loops": 398
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 100,
+          "best": 1.7248706321837598e-05,
+          "median": 1.738443868378321e-05,
+          "loops": 22964
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 100,
+          "best": 2.6670488082240555e-05,
+          "median": 2.6712450334504494e-05,
+          "loops": 7894
+        },
+        {
+          "name": "Standard.verify",
+          "size": 100,
+          "best": 2.2577993536311688e-05,
+          "median": 2.272510000361796e-05,
+          "loops": 9590
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 100,
+          "best": 2.0139079954312293e-05,
+          "median": 2.017339819148728e-05,
+          "loops": 11482
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 100,
+          "best": 0.0003628288140743663,
+          "median": 0.000373176351230022,
+          "loops": 968
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 100,
+          "best": 0.00034495519913550944,
+          "median": 0.00035259421981338946,
+          "loops": 532
+        },
+        {
+          "name": "Standard.validate",
+          "size": 100,
+          "best": 0.0008674621126641903,
+          "median": 0.000884134701039989,
+          "loops": 408
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 100,
+          "best": 0.00023742569124184643,
+          "median": 0.0002397941279718875,
+          "loops": 1422
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 100,
+          "best": 0.0012794646846480563,
+          "median": 0.0013167940283273446,
+          "loops": 282
+        },
+        {
+          "name": "Simple.of",
+          "size": 100,
+          "best": 0.0001651691921885304,
+          "median": 0.00016670189948675315,
+          "loops": 1930
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 100,
+          "best": 8.724342596691005e-06,
+          "median": 8.760294489542727e-06,
+          "loops": 45190
+        },
+        {
+          "name": "Simple.verify",
+          "size": 100,
+          "best": 1.398764377709002e-05,
+          "median": 1.4141478839934557e-05,
+          "loops": 14109
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 100,
+          "best": 9.842197766127347e-05,
+          "median": 9.891019216077782e-05,
+          "loops": 3044
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 100,
+          "best": 7.969646311893657e-05,
+          "median": 7.996422278104994e-05,
+          "loops": 2738
+        },
+        {
+          "name": "Simple.validate",
+          "size": 100,
+          "best": 4.849151127458067e-05,
+          "median": 4.851040699803018e-05,
+          "loops": 6386
+        },
+        {
+          "name": "Standard.of",
+          "size": 1000,
+          "best": 0.009760622898465954,
+          "median": 0.009802520848461426,
+          "loops": 40
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 1000,
+          "best": 2.102838480945212e-05,
+          "median": 2.1065125223722283e-05,
+          "loops": 10158
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 1000,
+          "best": 3.034880002602803e-05,
+          "median": 3.0470102399931235e-05,
+          "loops": 9736
+        },
+        {
+          "name": "Standard.verify",
+          "size": 1000,
+          "best": 2.8488198264551816e-05,
+          "median": 2.959055782240441e-05,
+          "loops": 10168
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 1000,
+          "best": 2.5990610490474335e-05,
+          "median": 2.6079553012926724e-05,
+          "loops": 10526
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.00045743744005449116,
+          "median": 0.00047156988144186993,
+          "loops": 700
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0004768204887836406,
+          "median": 0.00048055017675112063,
+          "loops": 798
+        },
+        {
+          "name": "Standard.validate",
+          "size": 1000,
+          "best": 0.008713945427665576,
+          "median": 0.008759126998484135,
+          "loops": 42
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 1000,
+          "best": 0.002323750000487277,
+          "median": 0.002335522377024186,
+          "loops": 162
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 1000,
+          "best": 0.012925625001246641,
+          "median": 0.012948119035822206,
+          "loops": 28
+        },
+        {
+          "name": "Simple.of",
+          "size": 1000,
+          "best": 0.0017100768807690294,
+          "median": 0.0017126113541045152,
+          "loops": 226
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 1000,
+          "best": 1.2435330066178272e-05,
+          "median": 1.2449852565178602e-05,
+          "loops": 32048
+        },
+        {
+          "name": "Simple.verify",
+          "size": 1000,
+          "best": 1.9440877542387704e-05,
+          "median": 1.947330800886901e-05,
+          "loops": 10412
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 1000,
+          "best": 0.0001858344270129868,
+          "median": 0.00018632674457686602,
+          "loops": 1562
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 1000,
+          "best": 0.00020435868785254735,
+          "median": 0.00020501427007393527,
+          "loops": 1714
+        },
+        {
+          "name": "Simple.validate",
+          "size": 1000,
+          "best": 0.0004953756256352174,
+          "median": 0.0004959911202803214,
+          "loops": 732
+        },
+        {
+          "name": "Standard.of",
+          "size": 10000,
+          "best": 0.09772706250078045,
+          "median": 0.09793422927032225,
+          "loops": 4
+        },
+        {
+          "name": "Standard.get_proof(index)",
+          "size": 10000,
+          "best": 2.5166831657991584e-05,
+          "median": 2.5273711841938906e-05,
+          "loops": 15908
+        },
+        {
+          "name": "Standard.get_proof(value)",
+          "size": 10000,
+          "best": 3.479648581755279e-05,
+          "median": 3.509458671205075e-05,
+          "loops": 6424
+        },
+        {
+          "name": "Standard.verify",
+          "size": 10000,
+          "best": 3.425321683460187e-05,
+          "median": 3.431477362204229e-05,
+          "loops": 7642
+        },
+        {
+          "name": "Standard.verify_leaf",
+          "size": 10000,
+          "best": 3.169465397225922e-05,
+          "median": 3.1792326304419204e-05,
+          "loops": 9476
+        },
+        {
+          "name": "Standard.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.000586024414133135,
+          "median": 0.0005922894688410452,
+          "loops": 512
+        },
+        {
+          "name": "Standard.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.0006576458333598463,
+          "median": 0.0006668065160228904,
+          "loops": 564
+        },
+        {
+          "name": "Standard.validate",
+          "size": 10000,
+          "best": 0.08849040625500493,
+          "median": 0.08979299999191426,
+          "loops": 4
+        },
+        {
+          "name": "Standard.to_json",
+          "size": 10000,
+          "best": 0.023208640624943655,
+          "median": 0.023296666688111145,
+          "loops": 16
+        },
+        {
+          "name": "Standard.from_json",
+          "size": 10000,
+          "best": 0.12865402101306245,
+          "median": 0.12866241653682664,
+          "loops": 2
+        },
+        {
+          "name": "Simple.of",
+          "size": 10000,
+          "best": 0.017543625001880257,
+          "median": 0.017596630681179126,
+          "loops": 22
+        },
+        {
+          "name": "Simple.get_proof(index)",
+          "size": 10000,
+          "best": 1.629670362469689e-05,
+          "median": 1.6335959457238846e-05,
+          "loops": 24196
+        },
+        {
+          "name": "Simple.verify",
+          "size": 10000,
+          "best": 2.50666257472165e-05,
+          "median": 2.509940258131434e-05,
+          "loops": 9988
+        },
+        {
+          "name": "Simple.get_multi_proof(32)",
+          "size": 10000,
+          "best": 0.00032819945988228063,
+          "median": 0.00032913856791119656,
+          "loops": 648
+        },
+        {
+          "name": "Simple.verify_multi_proof(32)",
+          "size": 10000,
+          "best": 0.00041065133032709065,
+          "median": 0.000411989975657661,
+          "loops": 902
+        },
+        {
+          "name": "Simple.validate",
+          "size": 10000,
+          "best": 0.004980530680364205,
+          "median": 0.0050493975690591875,
+          "loops": 72
+        }
+      ]
+    }
+  }
+}

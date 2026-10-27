@@ -9,3 +9,4 @@ local.env
 .pytest_cache
 .ruff_cache
 .vscode
+benchmarks/.worktrees/
