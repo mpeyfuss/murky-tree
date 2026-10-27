@@ -22,7 +22,10 @@ def format_leaf(value: BytesLike) -> bytes:
     used as-is (no keccak) -- it is only ABI-encoded as a ``bytes32`` to validate
     the length and pad if short.
     """
-    return abi_encode(["bytes32"], [_to_bytes32(value)])
+    raw = _to_bytes32(value)
+    if len(raw) <= 32:
+        return raw.ljust(32, b"\x00")
+    return abi_encode(["bytes32"], [raw])
 
 
 @dataclass
@@ -51,8 +54,10 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
         tree: list[bytes],
         values: list[LeafValue[bytes]],
         node_hash: NodeHash | None = None,
+        *,
+        _leaf_hashes: list[bytes] | None = None,
     ):
-        super().__init__(tree, values, node_hash)
+        super().__init__(tree, values, node_hash, _leaf_hashes=_leaf_hashes)
         self._custom_node_hash = node_hash is not None
 
     def _leaf_hash(self, value: bytes) -> bytes:
@@ -69,7 +74,9 @@ class SimpleMerkleTree(BaseMerkleTree[bytes]):
         tree, indexed_values = build_tree(
             leaves, leaf_hashes, sort_leaves, node_hash or hash_pair
         )
-        return SimpleMerkleTree(tree, indexed_values, node_hash)
+        return SimpleMerkleTree(
+            tree, indexed_values, node_hash, _leaf_hashes=leaf_hashes
+        )
 
     @staticmethod
     def load(

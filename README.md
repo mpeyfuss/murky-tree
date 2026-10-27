@@ -541,3 +541,26 @@ in [`LICENSE`](LICENSE):
 
 - OpenZeppelin (zOS Global Limited and contributors) — original `@openzeppelin/merkle-tree`
 - Stakewise Labs — Python port
+
+## Releasing to PyPI
+
+The release workflow builds a universal Python wheel and source distribution,
+tests the installed packages outside the source checkout, and validates their
+metadata before publishing through PyPI Trusted Publishing.
+
+One-time repository setup:
+
+- Configure a PyPI trusted publisher for `mpeyfuss/murky-tree`, workflow
+  `release.yaml`, and environment `pypi`.
+- Create the GitHub Actions environment `pypi`. Configure required reviewers if
+  publishing should require manual approval; the environment name alone does
+  not enforce approval. Allow deployment from release tags.
+
+To release, update `project.version` in `pyproject.toml` and refresh `uv.lock`
+with `uv lock`. Commit the changes and publish a stable GitHub Release tagged
+`vX.Y.Z` at that commit (for example, `v1.2.0`). The tag must match the package
+version. Drafts and prereleases do not publish to PyPI.
+
+The workflow summary lists the tested distributions and their SHA-256 hashes.
+Approve the `pypi` deployment if reviewers are configured. The publish job uses
+the exact validated artifacts and requires no stored PyPI API token.

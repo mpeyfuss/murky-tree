@@ -41,12 +41,13 @@ makes the fold order-independent; ``make_merkle_tree`` / ``process_proof`` /
 override so callers (e.g. ``SimpleMerkleTree``) can supply a custom one.
 """
 
+from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import pairwise
 from typing import Any
 
-from murky_tree.utils import keccak
+from eth_hash.auto import keccak as _keccak_bytes
 
 # A node hash combines two child nodes into their parent. The default,
 # ``hash_pair``, sorts the pair so proofs need not encode left/right position;
@@ -62,9 +63,7 @@ class CoreMultiProof:
 
 
 def hash_pair(a: bytes, b: bytes) -> bytes:
-    if a < b:
-        return keccak(a + b)
-    return keccak(b + a)
+    return _keccak_bytes(a + b if a < b else b + a)
 
 
 def left_child_index(i: int) -> int:
@@ -178,18 +177,18 @@ def get_multi_proof(tree: list[bytes], indices: list[int]) -> CoreMultiProof:
         if prev_index == next_index:
             raise ValueError("Cannot prove duplicated index")
 
-    stack = indices[:]
+    stack = deque(indices)
     proof = []
     proof_flags = []
 
     while len(stack) > 0 and stack[0] > 0:
-        j = stack.pop(0)  # take from the beginning
+        j = stack.popleft()  # take from the beginning
         s = sibling_index(j)
         p = parent_index(j)
 
         if len(stack) and s == stack[0]:
             proof_flags.append(True)
-            stack.pop(0)  # consume from the stack
+            stack.popleft()  # consume from the stack
         else:
             proof_flags.append(False)
             proof.append(tree[s])
@@ -224,18 +223,18 @@ def process_multi_proof(
     ):
         raise ValueError("Provided leaves and multiproof are not compatible")
 
-    stack = multiproof.leaves.copy()
-    proof = multiproof.proof.copy()
+    stack = deque(multiproof.leaves)
+    proof = deque(multiproof.proof)
 
     for flag in multiproof.proof_flags:
-        a = stack.pop(0)
+        a = stack.popleft()
         if flag:
-            b = stack.pop(0)
+            b = stack.popleft()
         else:
-            b = proof.pop(0)
+            b = proof.popleft()
 
         stack.append(node_hash(a, b))
-    return pop_safe(stack) or proof.pop(0)
+    return pop_safe(stack) or proof.popleft()
 
 
 def is_valid_merkle_tree(tree: list[bytes], node_hash: NodeHash = hash_pair) -> bool:
@@ -255,7 +254,7 @@ def is_valid_merkle_tree(tree: list[bytes], node_hash: NodeHash = hash_pair) -> 
     return len(tree) > 0
 
 
-def pop_safe(array: list[Any]) -> Any:
+def pop_safe(array: list[Any] | deque[Any]) -> Any:
     try:
         return array.pop()
     except IndexError:

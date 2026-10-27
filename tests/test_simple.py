@@ -1,9 +1,12 @@
+from unittest.mock import patch
+
 import pytest
+from eth_abi import encode as abi_encode
 from eth_utils import to_hex
 
 from murky_tree import SimpleMerkleTree, StandardMerkleTree
 from murky_tree.merkletree import LeafValue
-from murky_tree.simple import SimpleMerkleTreeData
+from murky_tree.simple import SimpleMerkleTreeData, format_leaf
 from murky_tree.standard import standard_leaf_hash
 from murky_tree.utils import keccak
 
@@ -178,3 +181,30 @@ class TestSimpleMerkleTree:
             )
             tree.get_proof(0)
         assert "Merkle tree does not contain the expected value" in str(ctx.value)
+
+
+def test_construction_hashes_once_and_preserves_duplicate_lookup():
+    values = [b"z", b"a", b"z"]
+    with patch("murky_tree.simple.format_leaf", wraps=format_leaf) as hashed:
+        tree = SimpleMerkleTree.of(values, sort_leaves=True)
+        assert hashed.call_count == len(values)
+    assert tree.leaf_lookup(b"z") == 2
+    assert tree.leaf_lookup(b"a") == 1
+    tree.validate()
+
+
+def test_mutated_value_is_detected():
+    tree = SimpleMerkleTree.of([b"a", b"b"])
+    tree.values[0].value = b"changed"
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.validate()
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.get_proof(0)
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.get_multi_proof([0])
+
+
+def test_padding_matches_abi():
+    for length in range(33):
+        value = bytes(range(length))
+        assert format_leaf(value) == abi_encode(["bytes32"], [value])
