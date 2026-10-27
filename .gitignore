@@ -9,3 +9,8 @@ local.env
 .pytest_cache
 .ruff_cache
 .vscode
+
+/target/
+/murky_tree_core/target/
+*.so
+*.pyd

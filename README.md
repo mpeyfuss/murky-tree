@@ -167,7 +167,7 @@ tree = SimpleMerkleTree.from_json(json_tree)
 By default, nodes are combined with the same sorted-pair Keccak256 as `StandardMerkleTree`. You can supply your own `node_hash`, for example to use a different hash function or add a domain separator:
 
 ```python
-from eth_utils import keccak
+from murky_tree.utils import keccak
 
 
 def my_node_hash(a: bytes, b: bytes) -> bytes:
@@ -521,6 +521,62 @@ print(tree)
 ```
 
 Returns a visual representation of the tree that can be useful for debugging.
+
+## Rust acceleration
+
+The default Keccak hashing, flat tree construction, validation, and proof and
+multiproof algorithms run in Rust through a PyO3 adapter. Existing Python
+imports, tree lists, callbacks, and OpenZeppelin JSON formats remain compatible.
+Custom node hash callbacks use the Python algorithms. ABI encoding stays with
+`eth-abi`, including nested and dynamic Solidity types.
+
+Install a matching wheel with `pip install murky-tree`; wheels do not require a
+Rust toolchain. Building from source requires stable Rust (MSRV 1.83), Cargo,
+and a C linker. For development:
+
+```sh
+uv sync
+uv run pytest
+uv build
+
+# Run Rust checks from the standalone crate directory.
+cd murky_tree_core
+cargo test
+```
+
+Maturin builds the native module in release mode for `uv sync` and `uv build`.
+uv tracks the Rust sources, manifest, and lockfile so `uv sync` and `uv run`
+rebuild the extension after Rust edits. The release version comes from
+`murky_tree_core/Cargo.toml`.
+The wheel uses Python's stable ABI for CPython 3.10+. CI builds wheels for Linux
+x86-64/aarch64, macOS arm64/x86-64, and Windows x86-64, and tests each wheel on
+Python 3.10 and 3.14. CI also builds a source distribution. Ordinary CI creates
+artifacts without publishing; stable GitHub Releases can publish the tested
+artifacts to PyPI after approval of the protected `pypi` environment. See
+[Releasing](RELEASING.md) for the required GitHub and PyPI setup and release steps.
+
+Version 2.0 requires `list[bytes]` inputs for the low-level native tree/hash
+operations in `murky_tree.core`: tuples and non-`bytes` nodes are rejected with
+`TypeError`. Use a list of bytes, or the public tree constructors, which normalize
+their supported leaf inputs.
+
+The Rust extension is required. Install a wheel or run `uv sync` to compile it
+before importing the package from a source checkout. There is no Python backend
+or backend selection setting. The adapter retains Python orchestration only for
+user-supplied hash callbacks. Canonical compatibility is checked against the
+JavaScript-generated OpenZeppelin vectors in `reference/`.
+
+Bulk hashing releases the GIL after copying inputs into Rust-owned memory.
+Proof generation passes tree indices rather than copying the full tree, so a
+single proof remains logarithmic in tree size. Multiproof processing uses a
+linear-time queue. Invalid multiproofs that exhaust that queue raise
+`ValueError` (previously some raised `IndexError`).
+
+The standalone Rust crate lives in [murky_tree_core/](murky_tree_core/), with
+Merkle algorithms in `src/lib.rs` and PyO3 bindings in `src/python.rs`. Its
+default Cargo features do not depend on Python. Enable the `python` feature
+to build bindings. Run Cargo commands from `murky_tree_core/`; Python packaging
+commands still run from the repository root.
 
 ## Testing
 

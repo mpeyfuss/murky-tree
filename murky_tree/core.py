@@ -1,56 +1,17 @@
-r"""Flat-array Merkle tree core.
+"""Adapter for the required Rust Merkle core.
 
-The tree is stored as a single ``list[bytes]`` of ``2 * n - 1`` nodes in
-binary-heap order -- there are no node objects or pointers. This mirrors the
-layout of ``@openzeppelin/merkle-tree`` so that ``dump()`` serializes in a
-byte-for-byte compatible order, and it reduces all navigation to index math.
-
-Layout (example with 4 leaves ``L0..L3``)::
-
-    array index:   0      1      2      3    4    5    6
-                 +------+------+------+----+----+----+----+
-        tree[]:  | root | H34  | H10  | L3 | L2 | L1 | L0 |
-                 +------+------+------+----+----+----+----+
-                    \___ internal nodes __/   \___ leaves __/
-
-    tree shape:                [0] root
-                             /            \
-                       [1] H34            [2] H10
-                       /      \           /      \
-                   [3]        [4]      [5]        [6]
-                    L3         L2       L1         L0
-
-Leaves are written to the *end* of the array in reverse insertion order
-(``tree[len - 1 - i] = leaf_i``); internal nodes are then filled bottom-up, each
-the ``hash_pair`` of its two children, leaving the root at index 0. Reading the
-tree in level order (top-to-bottom, left-to-right) is exactly array order.
-
-Navigation is pure arithmetic on an index ``i`` (see the ``*_index`` helpers)::
-
-    left_child(i)  = 2i + 1
-    right_child(i) = 2i + 2
-    parent(i)      = (i - 1) // 2
-    sibling(i)     = i - 1 if i is even else i + 1
-
-A node is a leaf exactly when its left-child index falls outside the array, so
-no per-node flag is needed. ``get_proof`` walks parent-ward collecting each
-sibling; ``process_proof`` folds those siblings back up with the node hash to
-recompute the root. The default node hash (``hash_pair``) sorts each pair, which
-makes the fold order-independent; ``make_merkle_tree`` / ``process_proof`` /
-``process_multi_proof`` / ``is_valid_merkle_tree`` all accept a ``node_hash``
-override so callers (e.g. ``SimpleMerkleTree``) can supply a custom one.
+Default hashing and proof algorithms always use Rust. The callback branches
+retain only the Python orchestration needed for user-supplied node hashes.
+Proof generation transfers indices rather than copying the entire tree.
 """
 
+from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass
-from itertools import pairwise
-from typing import Any
 
+from murky_tree import _native as native
 from murky_tree.utils import keccak
 
-# A node hash combines two child nodes into their parent. The default,
-# ``hash_pair``, sorts the pair so proofs need not encode left/right position;
-# ``SimpleMerkleTree`` may supply a custom one.
 NodeHash = Callable[[bytes, bytes], bytes]
 
 
@@ -126,6 +87,9 @@ def check_valid_merkle_node(node: bytes) -> None:
 def make_merkle_tree(
     leaves: list[bytes], node_hash: NodeHash = hash_pair
 ) -> list[bytes]:
+    if node_hash is hash_pair:
+        return native.make_merkle_tree(leaves)
+
     for leaf in leaves:
         check_valid_merkle_node(leaf)
 
@@ -147,18 +111,15 @@ def make_merkle_tree(
 
 def get_proof(tree: list[bytes], index: int) -> list[bytes]:
     check_leaf_node(tree, index)
-
-    proof = []
-    while index > 0:
-        proof.append(tree[sibling_index(index)])
-        index = parent_index(index)
-
-    return proof
+    return [tree[i] for i in native.proof_indices(len(tree), index)]
 
 
 def process_proof(
     leaf: bytes, proof: list[bytes], node_hash: NodeHash = hash_pair
 ) -> bytes:
+    if node_hash is hash_pair:
+        return native.process_proof(leaf, proof)
+
     check_valid_merkle_node(leaf)
     for item in proof:
         check_valid_merkle_node(item)
@@ -169,46 +130,20 @@ def process_proof(
 
 
 def get_multi_proof(tree: list[bytes], indices: list[int]) -> CoreMultiProof:
-    for index in indices:
-        check_leaf_node(tree, index)
-
-    indices = sorted(indices, reverse=True)
-
-    for prev_index, next_index in pairwise(indices):
-        if prev_index == next_index:
-            raise ValueError("Cannot prove duplicated index")
-
-    stack = indices[:]
-    proof = []
-    proof_flags = []
-
-    while len(stack) > 0 and stack[0] > 0:
-        j = stack.pop(0)  # take from the beginning
-        s = sibling_index(j)
-        p = parent_index(j)
-
-        if len(stack) and s == stack[0]:
-            proof_flags.append(True)
-            stack.pop(0)  # consume from the stack
-        else:
-            proof_flags.append(False)
-            proof.append(tree[s])
-
-        stack.append(p)
-
-    if len(indices) == 0:
-        proof.append(tree[0])
-
-    return CoreMultiProof(
-        leaves=[tree[i] for i in indices],
-        proof=proof,
-        proof_flags=proof_flags,
-    )
+    for i in indices:
+        check_leaf_node(tree, i)
+    leaves, proof, flags = native.multi_proof_indices(len(tree), indices)
+    return CoreMultiProof([tree[i] for i in leaves], [tree[i] for i in proof], flags)
 
 
 def process_multi_proof(
     multiproof: CoreMultiProof, node_hash: NodeHash = hash_pair
 ) -> bytes:
+    if node_hash is hash_pair:
+        return native.process_multi_proof(
+            multiproof.leaves, multiproof.proof, multiproof.proof_flags
+        )
+
     for leaf in multiproof.leaves:
         check_valid_merkle_node(leaf)
 
@@ -224,21 +159,26 @@ def process_multi_proof(
     ):
         raise ValueError("Provided leaves and multiproof are not compatible")
 
-    stack = multiproof.leaves.copy()
-    proof = multiproof.proof.copy()
+    stack = deque(multiproof.leaves)
+    proof = deque(multiproof.proof)
 
     for flag in multiproof.proof_flags:
-        a = stack.pop(0)
+        if len(stack) < (2 if flag else 1):
+            raise ValueError("Invalid multiproof format")
+        a = stack.popleft()
         if flag:
-            b = stack.pop(0)
+            b = stack.popleft()
         else:
-            b = proof.pop(0)
+            b = proof.popleft()
 
         stack.append(node_hash(a, b))
-    return pop_safe(stack) or proof.pop(0)
+    return stack.pop() if stack else proof.popleft()
 
 
 def is_valid_merkle_tree(tree: list[bytes], node_hash: NodeHash = hash_pair) -> bool:
+    if node_hash is hash_pair:
+        return native.is_valid_merkle_tree(tree)
+
     for i, node in enumerate(tree):
         if not is_valid_merkle_node(node):
             return False
@@ -253,10 +193,3 @@ def is_valid_merkle_tree(tree: list[bytes], node_hash: NodeHash = hash_pair) -> 
             return False
 
     return len(tree) > 0
-
-
-def pop_safe(array: list[Any]) -> Any:
-    try:
-        return array.pop()
-    except IndexError:
-        return None

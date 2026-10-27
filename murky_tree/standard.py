@@ -6,12 +6,12 @@ from eth_abi import encode as abi_encode
 from eth_typing import HexStr
 from eth_utils import to_bytes, to_hex
 
+from murky_tree import _native as native
 from murky_tree.core import hash_pair
 from murky_tree.merkletree import BaseMerkleTree, LeafValue, MultiProof, T, build_tree
 from murky_tree.utils import (
     decode_values_from_json,
     encode_values_for_json,
-    keccak,
 )
 
 
@@ -24,17 +24,23 @@ class StandardMerkleTreeData(Generic[T]):
 
 
 def standard_leaf_hash(values: Sequence[Any], types: list[str]) -> bytes:
-    return keccak(keccak(abi_encode(types, values)))
+    encoded = abi_encode(types, values)
+    return native.double_keccak(encoded)
 
 
 class StandardMerkleTree(BaseMerkleTree[T]):
     leaf_encoding: list[str]
 
     def __init__(
-        self, tree: list[bytes], values: list[LeafValue[T]], leaf_encoding: list[str]
+        self,
+        tree: list[bytes],
+        values: list[LeafValue[T]],
+        leaf_encoding: list[str],
+        *,
+        _leaf_hashes: list[bytes] | None = None,
     ):
         self.leaf_encoding = leaf_encoding
-        super().__init__(tree, values)
+        super().__init__(tree, values, _leaf_hashes=_leaf_hashes)
 
     def _leaf_hash(self, value: T) -> bytes:
         return standard_leaf_hash(value, self.leaf_encoding)
@@ -45,7 +51,9 @@ class StandardMerkleTree(BaseMerkleTree[T]):
     ) -> "StandardMerkleTree[T]":
         leaf_hashes = [standard_leaf_hash(value, leaf_encoding) for value in values]
         tree, indexed_values = build_tree(values, leaf_hashes, sort_leaves, hash_pair)
-        return StandardMerkleTree(tree, indexed_values, leaf_encoding)
+        return StandardMerkleTree(
+            tree, indexed_values, leaf_encoding, _leaf_hashes=leaf_hashes
+        )
 
     @staticmethod
     def load(data: StandardMerkleTreeData[T]) -> "StandardMerkleTree[T]":

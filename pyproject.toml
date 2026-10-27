@@ -1,6 +1,6 @@
 [project]
 name = "murky-tree"
-version = "1.1.0"
+dynamic = ["version"]
 description = "A Python library to generate merkle trees and merkle proofs for Ethereum use."
 readme = "README.md"
 license = "MIT"
@@ -12,7 +12,6 @@ authors = [
 dependencies = [
     "eth-abi>=5.2.0",
     "eth-utils>=6.0.0",
-    "eth-hash[pycryptodome]>=0.8.0",
 ]
 
 [project.urls]
@@ -20,16 +19,31 @@ repository = "https://github.com/mpeyfuss/murky-tree"
 
 [tool.uv]
 exclude-newer = "7 days"
+cache-keys = [
+    { file = "pyproject.toml" },
+    { file = "murky_tree_core/Cargo.toml" },
+    { file = "murky_tree_core/Cargo.lock" },
+    { file = "murky_tree_core/src/**/*.rs" },
+]
 
 [build-system]
-requires = ["uv_build>=0.11.7,<0.12"]
-build-backend = "uv_build"
+requires = ["maturin>=1.9,<2"]
+build-backend = "maturin"
 
-[tool.uv.build-backend]
-module-root = ""
+[tool.maturin]
+manifest-path = "murky_tree_core/Cargo.toml"
+python-source = "."
+module-name = "murky_tree._native"
+features = ["python"]
+include = [
+    { path = "LICENSE", format = "sdist" },
+    { path = "reference/vectors.json", format = "sdist" },
+    { path = "tests/**/*.py", format = "sdist" },
+]
 
 [dependency-groups]
 dev = [
+    "eth-hash[pycryptodome]>=0.8.0",
     "ruff>=0.16.0",
     "ty>=0.0.64",
     "pytest>=9.1.1",

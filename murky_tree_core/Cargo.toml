@@ -1,0 +1,24 @@
+[package]
+name = "murky-tree-core"
+version = "2.0.0"
+publish = false
+edition = "2021"
+rust-version = "1.83"
+license = "MIT"
+description = "OpenZeppelin-compatible Merkle tree core and Python bindings"
+
+[lib]
+name = "murky_tree_core"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+python = ["dep:pyo3"]
+
+[dependencies]
+tiny-keccak = { version = "2", features = ["keccak"] }
+pyo3 = { version = "0.27", optional = true, features = ["extension-module", "abi3-py310"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

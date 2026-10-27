@@ -3,8 +3,9 @@ from typing import Any, Literal
 
 from eth_abi.grammar import ABIType, BasicType, parse
 from eth_typing import HexStr, Primitives
-from eth_utils import keccak as eth_utils_keccak
 from eth_utils import to_bytes, to_hex
+
+from murky_tree import _native as native
 
 
 def check_bounds(array: list, index: int) -> None:
@@ -71,7 +72,7 @@ def keccak(
     """Taken from web3py"""
     if isinstance(primitive, (bytes, int, type(None))):
         input_bytes = to_bytes(primitive, hexstr=hexstr, text=text)
-        return eth_utils_keccak(input_bytes)
+        return native.keccak(input_bytes)
 
     raise TypeError(
         f"You called keccak with first arg {primitive!r} and keywords "

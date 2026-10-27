@@ -1,0 +1,136 @@
+name: Wheels
+on:
+  push:
+    # Branches only: release.yaml calls this workflow for release tags.
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Exact commit to build and test
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      # The single list of release platforms. Each entry uploads a wheels-<name>
+      # artifact, and release.yaml publishes whatever this matrix produces.
+      matrix:
+        include:
+          - { name: linux-x86_64, runner: ubuntu-latest }
+          - { name: linux-aarch64, runner: ubuntu-24.04-arm }
+          - { name: macos-arm64, runner: macos-latest }
+          - { name: macos-x86_64, runner: macos-15-intel }
+          - { name: windows-x86_64, runner: windows-latest }
+    name: build (${{ matrix.name }})
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.10"
+      - uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1
+        with:
+          command: build
+          args: --release --locked --manifest-path murky_tree_core/Cargo.toml --out dist
+          manylinux: auto
+      - name: Smoke test wheel without a Python Keccak backend
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import subprocess
+          import tempfile
+          import venv
+
+          wheels = list(Path("dist").resolve().glob("*.whl"))
+          assert len(wheels) == 1, wheels
+          with tempfile.TemporaryDirectory() as directory:
+              root = Path(directory)
+              venv.EnvBuilder(with_pip=True, symlinks=os.name != "nt").create(root / "venv")
+              executable = root / "venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+              subprocess.run([str(executable), "-m", "pip", "install", str(wheels[0])], check=True)
+              smoke = """
+          import importlib.util
+          assert importlib.util.find_spec("Crypto") is None
+          assert importlib.util.find_spec("sha3") is None
+          from murky_tree import SimpleMerkleTree, StandardMerkleTree
+          trees = [
+              SimpleMerkleTree.of([b"a" * 32, b"b" * 32, b"c" * 32]),
+              StandardMerkleTree.of(
+                  [["0x" + "11" * 20, i] for i in range(3)], ["address", "uint256"]
+              ),
+          ]
+          for tree in trees:
+              tree.validate()
+              assert tree.verify_leaf(0, tree.get_proof(0))
+              assert tree.verify_multi_proof_leaf(tree.get_multi_proof([0, 2]))
+              restored = type(tree).load(tree.dump())
+              restored.validate()
+              assert restored.root == tree.root
+          """
+              subprocess.run([str(executable), "-I", "-c", smoke], cwd=root, check=True)
+      - name: Test installed wheel on Python 3.10 outside source tree
+        shell: bash
+        run: |
+          python -m pip install dist/*.whl pytest "eth-hash[pycryptodome]>=0.8.0"
+          mkdir -p "$RUNNER_TEMP/wheel-test/reference"
+          cp -r tests "$RUNNER_TEMP/wheel-test/"
+          cp reference/vectors.json "$RUNNER_TEMP/wheel-test/reference/"
+          cd "$RUNNER_TEMP/wheel-test"
+          python -m pytest -q tests
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.14"
+      - name: Test the same wheel on Python 3.14
+        shell: bash
+        run: |
+          python -m pip install dist/*.whl pytest "eth-hash[pycryptodome]>=0.8.0"
+          cd "$RUNNER_TEMP/wheel-test"
+          python -m pytest -q tests
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: wheels-${{ matrix.name }}
+          path: dist/*.whl
+          if-no-files-found: error
+
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.14"
+      - uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1
+        with:
+          command: sdist
+          args: --manifest-path murky_tree_core/Cargo.toml --out dist
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master; toolchain set below
+        with:
+          toolchain: stable
+      - name: Build and test the source distribution
+        shell: bash
+        run: |
+          python -m pip install dist/*.tar.gz pytest "eth-hash[pycryptodome]>=0.8.0"
+          mkdir -p "$RUNNER_TEMP/sdist-test/reference"
+          cp -r tests "$RUNNER_TEMP/sdist-test/"
+          cp reference/vectors.json "$RUNNER_TEMP/sdist-test/reference/"
+          cd "$RUNNER_TEMP/sdist-test"
+          python -m pytest -q tests
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
