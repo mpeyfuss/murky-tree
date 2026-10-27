@@ -1,6 +1,13 @@
+from unittest.mock import patch
+
 import pytest
 
-from murky_tree.standard import LeafValue, StandardMerkleTree, StandardMerkleTreeData
+from murky_tree.standard import (
+    LeafValue,
+    StandardMerkleTree,
+    StandardMerkleTreeData,
+    standard_leaf_hash,
+)
 from murky_tree.utils import keccak
 
 ZERO_BYTES = bytes(32)
@@ -152,3 +159,27 @@ class TestStandartTestCase:
 └─ 2) 9cf5a63718145ba968a01c1d557020181c5b252f665cf7386d370eddb176517b
     """.strip()
         assert str(tree) == expected
+
+
+def test_construction_hashes_once_and_preserves_duplicate_lookup():
+    values = [[9], [1], [9]]
+    with patch(
+        "murky_tree.standard.standard_leaf_hash", wraps=standard_leaf_hash
+    ) as hashed:
+        tree = StandardMerkleTree.of(values, ["uint256"], sort_leaves=True)
+        assert hashed.call_count == len(values)
+    assert tree.leaf_lookup([9]) == 2
+    assert tree.leaf_lookup([1]) == 1
+    tree.validate()
+
+
+def test_mutated_value_is_detected():
+    values = [[1], [2]]
+    tree = StandardMerkleTree.of(values, ["uint256"])
+    values[0][0] = 3
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.validate()
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.get_proof(0)
+    with pytest.raises(ValueError, match="does not contain the expected value"):
+        tree.get_multi_proof([0])

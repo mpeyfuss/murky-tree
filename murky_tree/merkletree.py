@@ -88,13 +88,20 @@ class BaseMerkleTree(ABC, Generic[T]):
         tree: list[bytes],
         values: list[LeafValue[T]],
         node_hash: NodeHash | None = None,
+        *,
+        _leaf_hashes: list[bytes] | None = None,
     ):
         self.tree = tree
         self.values = values
         self._node_hash = node_hash or hash_pair
         self._hash_lookup = {}
         for index, leaf_value in enumerate(values):
-            self._hash_lookup[to_hex(self._leaf_hash(leaf_value.value))] = index
+            leaf_hash = (
+                self._leaf_hash(leaf_value.value)
+                if _leaf_hashes is None
+                else _leaf_hashes[index]
+            )
+            self._hash_lookup[to_hex(leaf_hash)] = index
 
     @abstractmethod
     def _leaf_hash(self, value: T) -> bytes:
