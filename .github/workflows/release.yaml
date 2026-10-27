@@ -12,133 +12,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  validate:
+  build:
     # Stable releases only. Drafts don't trigger this workflow; prereleases don't publish.
     if: ${{ !github.event.release.prerelease }}
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-      commit: ${{ steps.version.outputs.commit }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.14"
-      - name: Check release tag and version
-        id: version
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+      - name: Check release tag matches project version
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-        shell: python
-        run: |
-          import os
-          from pathlib import Path
-          import re
-          import subprocess
-          import tomllib
-
-          project = tomllib.loads(Path("pyproject.toml").read_text())["project"]
-          version = project["version"]
-          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
-              raise SystemExit("Release publishing requires a stable X.Y.Z project version")
-          if os.environ["RELEASE_TAG"] != f"v{version}":
-              raise SystemExit(f"Release tag must be v{version}, matching pyproject.toml")
-          commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
-              output.write(f"version={version}\ncommit={commit}\n")
-
-  build:
-    needs: validate
-    uses: ./.github/workflows/wheels.yaml
-    with:
-      ref: ${{ needs.validate.outputs.commit }}
-
-  distributions:
-    needs: [validate, build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
-        with:
-          pattern: wheels-*
-          path: wheel-artifacts
-      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
-        with:
-          name: sdist
-          path: dist
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.14"
-      - name: Validate distributions and prepare approval summary
-        env:
-          RELEASE_VERSION: ${{ needs.validate.outputs.version }}
-          RELEASE_COMMIT: ${{ needs.validate.outputs.commit }}
-        shell: python
-        run: |
-          from email.parser import BytesParser
-          import hashlib
-          import os
-          from pathlib import Path
-          import shutil
-          import tarfile
-          import zipfile
-
-          version = os.environ["RELEASE_VERSION"]
-          # `needs: build` only passes when every Wheels matrix entry succeeded, so
-          # each platform is present; check each one uploaded exactly one wheel and
-          # that no two platforms produced the same filename.
-          artifacts = sorted(p for p in Path("wheel-artifacts").iterdir() if p.is_dir())
-          if not artifacts:
-              raise SystemExit("No wheel artifacts were downloaded")
-          wheels = []
-          for artifact in artifacts:
-              found = list(artifact.glob("*.whl"))
-              if len(found) != 1:
-                  raise SystemExit(f"{artifact.name} must contain exactly one wheel, found {len(found)}")
-              if any(wheel.name == found[0].name for _, wheel in wheels):
-                  raise SystemExit(f"Two platforms produced {found[0].name}")
-              wheels.append((artifact.name.removeprefix("wheels-"), found[0]))
-          sdists = sorted(Path("dist").glob("*.tar.gz"))
-          if len(sdists) != 1:
-              raise SystemExit("Expected one source distribution")
-          for _, wheel in wheels:
-              shutil.copy2(wheel, Path("dist") / wheel.name)
-          files = [(platform, Path("dist") / wheel.name) for platform, wheel in wheels]
-          files.append(("source", sdists[0]))
-          for _, path in files:
-              if path.suffix == ".whl":
-                  with zipfile.ZipFile(path) as archive:
-                      metadata_path, = [n for n in archive.namelist() if n.endswith(".dist-info/METADATA")]
-                      metadata = archive.read(metadata_path)
-              else:
-                  with tarfile.open(path) as archive:
-                      metadata_path, = [n for n in archive.getnames() if n.count("/") == 1 and n.endswith("/PKG-INFO")]
-                      metadata = archive.extractfile(metadata_path).read()
-              fields = BytesParser().parsebytes(metadata)
-              if fields["Name"] != "murky-tree" or fields["Version"] != version:
-                  raise SystemExit(f"Unexpected package name or version in {path.name}")
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
-              summary.write(f"## Ready for PyPI approval: murky-tree {version}\n\n")
-              summary.write(f"Commit: `{os.environ['RELEASE_COMMIT']}`\n\n")
-              summary.write("Approve the **pypi** deployment to publish these tested files.\n\n")
-              summary.write("| Platform | File | SHA-256 |\n| --- | --- | --- |\n")
-              for platform, path in files:
-                  digest = hashlib.sha256(path.read_bytes()).hexdigest()
-                  summary.write(f"| {platform} | {path.name} | `{digest}` |\n")
-      - name: Check PyPI package metadata
-        run: |
-          python -m pip install 'twine>=6,<7'
-          python -m twine check --strict dist/*
+        run: test "$RELEASE_TAG" = "v$(uv version --short)"
+      - run: uv build
+      # -I keeps the source tree off sys.path so this imports the installed wheel.
+      - name: Smoke-test the wheel
+        run: uv run --isolated --no-project --with dist/*.whl python -I -c "import murky_tree"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: pypi-distributions
-          path: dist/*
+          name: dist
+          path: dist/
           if-no-files-found: error
 
   publish:
     name: Approve and publish to PyPI
-    needs: distributions
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -149,9 +48,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
-          name: pypi-distributions
+          name: dist
           path: dist
-      - name: Publish tested distributions with PyPI Trusted Publishing
-        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
-        with:
-          packages-dir: dist/
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+      - run: uv publish
